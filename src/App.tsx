@@ -1,0 +1,70 @@
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { CartProvider } from './context/CartContext';
+import { AuthProvider } from './context/AuthContext';
+import { ProductProvider } from './context/ProductContext';
+import { Navbar } from './components/Navbar';
+import { Footer } from './components/Footer';
+import { ScrollToTop } from './components/ScrollToTop';
+
+import { AppProvider } from './context/AppContext';
+import { Home } from './pages/Home';
+import { ProductList } from './pages/ProductList';
+import { ProductDetail } from './pages/ProductDetail';
+import { Cart } from './pages/Cart';
+import { Checkout } from './pages/Checkout';
+import { OrderConfirmation } from './pages/OrderConfirmation';
+import { Login } from './pages/Login';
+import { Signup } from './pages/Signup';
+import { Orders } from './pages/Orders';
+import { AdminLogin } from './pages/admin/AdminLogin';
+import { AdminLayout } from './components/admin/AdminLayout';
+import { AdminDashboard } from './pages/admin/AdminDashboard';
+import { AdminOrders } from './pages/admin/AdminOrders';
+import { AdminSettings } from './pages/admin/AdminSettings';
+
+export default function App() {
+  return (
+    <AppProvider>
+      <AuthProvider>
+        <ProductProvider>
+          <CartProvider>
+            <Router>
+            <ScrollToTop />
+            <div className="flex flex-col min-h-screen bg-gray-50 text-gray-900 font-sans">
+              <Navbar />
+              <main className="flex-grow">
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/products" element={<ProductList />} />
+                  <Route path="/product/:id" element={<ProductDetail />} />
+                  <Route path="/cart" element={<Cart />} />
+                  <Route path="/checkout" element={<Checkout />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/signup" element={<Signup />} />
+                  <Route path="/orders" element={<Orders />} />
+                  <Route path="/order-confirmation" element={<OrderConfirmation />} />
+                  
+                  {/* Admin Routes */}
+                  <Route path="/admin/login" element={<AdminLogin />} />
+                  <Route element={<AdminLayout />}>
+                    <Route path="/admin" element={<AdminDashboard />} />
+                    <Route path="/admin/orders" element={<AdminOrders />} />
+                    <Route path="/admin/settings" element={<AdminSettings />} />
+                  </Route>
+                </Routes>
+              </main>
+              <Footer />
+            </div>
+          </Router>
+        </CartProvider>
+      </ProductProvider>
+    </AuthProvider>
+    </AppProvider>
+  );
+}
