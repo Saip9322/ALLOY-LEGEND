@@ -14,7 +14,10 @@ interface Order {
   quantity: number;
   status: 'pending' | 'shipped' | 'delivered' | 'processing';
   address: string;
+  landmark?: string;
   city: string;
+  state?: string;
+  country?: string;
 }
 
 export const Orders: React.FC = () => {
@@ -126,9 +129,11 @@ export const Orders: React.FC = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-gray-800">
                       <div>
                         <h4 className="text-[10px] text-gray-500 font-bold uppercase tracking-[1px] mb-2">Shipping Address</h4>
-                        <p className="text-[13px] text-gray-300 leading-relaxed">
-                          {order.address}, {order.city}
-                        </p>
+                        <div className="text-[12px] text-gray-300 leading-tight space-y-0.5">
+                          <p>{order.address}</p>
+                          {order.landmark && <p className="text-[10px] text-gray-500 italic">Landmark: {order.landmark}</p>}
+                          <p>{order.city}, {order.state} {order.country}</p>
+                        </div>
                       </div>
                       <div>
                         <h4 className="text-[10px] text-gray-500 font-bold uppercase tracking-[1px] mb-2">Delivery Progress</h4>

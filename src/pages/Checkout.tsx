@@ -17,11 +17,12 @@ export const Checkout: React.FC = () => {
     firstName: user?.email ? user.email.split('@')[0] : '',
     lastName: '',
     email: user?.email || '',
-    phone: '',
-    address: '',
-    city: '',
-    state: '',
-    zipCode: '',
+    phone: user?.user_metadata?.phone || '',
+    address: user?.user_metadata?.address || '',
+    landmark: user?.user_metadata?.landmark || '',
+    city: user?.user_metadata?.city || '',
+    state: user?.user_metadata?.state || '',
+    zipCode: user?.user_metadata?.zip || '',
     country: 'India',
     cardNumber: '',
     expiryDate: '',
@@ -101,6 +102,10 @@ export const Checkout: React.FC = () => {
         phone: formData.phone,
         email: formData.email,
         city: formData.city,
+        state: formData.state,
+        zip_code: formData.zipCode,
+        country: formData.country,
+        landmark: formData.landmark,
         address: formData.address,
         product_name: item.name,
         product_variant: item.brand,
@@ -134,6 +139,7 @@ export const Checkout: React.FC = () => {
           firstName: formData.firstName,
           lastName: formData.lastName,
           address: formData.address,
+          landmark: formData.landmark,
           city: formData.city,
           state: formData.state,
           zipCode: formData.zipCode,
@@ -269,6 +275,17 @@ export const Checkout: React.FC = () => {
                       className={`w-full bg-midnight border rounded-lg px-5 py-3 focus:outline-none text-[14px] text-white placeholder:text-gray-700 transition-colors ${errors.address ? 'border-racing-red' : 'border-slate-border focus:border-racing-red'}`}
                     />
                     {errors.address && <span className="text-[10px] text-racing-red mt-1 block font-bold uppercase tracking-[1px]">{errors.address}</span>}
+                  </div>
+                  <div className="md:col-span-2">
+                    <label className="block text-[10px] font-black text-gray-500 uppercase tracking-[2px] mb-2">Landmark (Optional)</label>
+                    <input 
+                      type="text" 
+                      name="landmark"
+                      value={formData.landmark}
+                      onChange={handleInputChange}
+                      placeholder="e.g. Near Apollo Hospital"
+                      className="w-full bg-midnight border border-slate-border rounded-lg px-5 py-3 focus:outline-none focus:border-racing-red text-[14px] text-white placeholder:text-gray-700 transition-colors"
+                    />
                   </div>
                   <div>
                     <label className="block text-[10px] font-black text-gray-500 uppercase tracking-[2px] mb-2">City</label>

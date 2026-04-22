@@ -22,6 +22,8 @@ import { OrderConfirmation } from './pages/OrderConfirmation';
 import { Login } from './pages/Login';
 import { Signup } from './pages/Signup';
 import { Orders } from './pages/Orders';
+import { Profile } from './pages/Profile';
+import { TrackOrder } from './pages/TrackOrder';
 import { AdminLogin } from './pages/admin/AdminLogin';
 import { AdminLayout } from './components/admin/AdminLayout';
 import { AdminDashboard } from './pages/admin/AdminDashboard';
@@ -48,6 +50,8 @@ export default function App() {
                   <Route path="/login" element={<Login />} />
                   <Route path="/signup" element={<Signup />} />
                   <Route path="/orders" element={<Orders />} />
+                  <Route path="/profile" element={<Profile />} />
+                  <Route path="/track-order" element={<TrackOrder />} />
                   <Route path="/order-confirmation" element={<OrderConfirmation />} />
                   
                   {/* Admin Routes */}

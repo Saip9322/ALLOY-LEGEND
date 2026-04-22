@@ -10,6 +10,7 @@ interface AuthContextType {
   signIn: (email: string, password: string) => Promise<{ data: any, error: any }>;
   signInWithOtp: (email: string) => Promise<{ data: any, error: any }>;
   verifyOtp: (email: string, token: string) => Promise<{ data: any, error: any }>;
+  updateProfile: (data: { fullName?: string; address?: string; landmark?: string; city?: string; state?: string; zip?: string; country?: string; phone?: string }) => Promise<{ data: any, error: any }>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -116,8 +117,29 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const updateProfile = async (profileData: { fullName?: string; address?: string; landmark?: string; city?: string; state?: string; zip?: string; country?: string; phone?: string }) => {
+    try {
+      const supabase = getSupabase();
+      const { data, error } = await supabase.auth.updateUser({
+        data: {
+          full_name: profileData.fullName,
+          address: profileData.address,
+          landmark: profileData.landmark,
+          city: profileData.city,
+          state: profileData.state,
+          zip: profileData.zip,
+          country: profileData.country,
+          phone: profileData.phone,
+        }
+      });
+      return { data, error };
+    } catch (e) {
+      return { data: null, error: e };
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, loading, signOut, signUp, signIn, signInWithOtp, verifyOtp }}>
+    <AuthContext.Provider value={{ user, loading, signOut, signUp, signIn, signInWithOtp, verifyOtp, updateProfile }}>
       {children}
     </AuthContext.Provider>
   );

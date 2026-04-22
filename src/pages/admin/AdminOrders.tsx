@@ -28,6 +28,9 @@ interface Order {
   email: string;
   phone: string;
   city: string;
+  state?: string;
+  country?: string;
+  landmark?: string;
   address: string;
   product_name: string;
   product_variant: string;
@@ -202,7 +205,12 @@ export const AdminOrders: React.FC = () => {
                     <h4 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Destination</h4>
                     <div className="flex items-start gap-2 text-gray-600">
                       <MapPin className="w-3 h-3 mt-0.5 shrink-0" />
-                      <span className="text-xs">{order.address}, {order.city}</span>
+                      <div className="flex flex-col gap-1 text-xs">
+                        <span>{order.address}</span>
+                        {order.landmark && <span className="text-[10px] text-gray-400 font-medium">Near: {order.landmark}</span>}
+                        <span>{order.city}, {order.state}</span>
+                        <span className="uppercase text-[9px] font-bold">{order.country}</span>
+                      </div>
                     </div>
                   </div>
 

@@ -46,6 +46,7 @@ export const Navbar: React.FC = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-6">
             <Link to="/products" className="text-[11px] font-bold uppercase tracking-[2px] text-gray-400 hover:text-racing-red transition-colors">Store</Link>
+            <Link to="/track-order" className="text-[11px] font-bold uppercase tracking-[2px] text-gray-400 hover:text-racing-red transition-colors">Track Order</Link>
             
             <form onSubmit={handleSearch} className="relative">
               <input
@@ -66,10 +67,12 @@ export const Navbar: React.FC = () => {
                   <Link to="/orders" className="text-[11px] font-bold uppercase tracking-[2px] text-gray-400 hover:text-racing-red transition-colors">
                     My Orders
                   </Link>
-                  <div className="flex items-center gap-2 text-gray-400 border-l border-slate-border pl-4">
-                    <User className="h-4 w-4" />
-                    <span className="text-[11px] font-bold truncate max-w-[100px]">{user.email?.split('@')[0]}</span>
-                  </div>
+                  <Link to="/profile" className="flex items-center gap-2 text-gray-400 border-l border-slate-border pl-4 group">
+                    <User className="h-4 w-4 group-hover:text-racing-red" />
+                    <span className="text-[11px] font-bold truncate max-w-[100px] group-hover:text-racing-red">
+                      {user.user_metadata?.full_name || user.email?.split('@')[0]}
+                    </span>
+                  </Link>
                   <button 
                     onClick={handleSignOut}
                     className="text-[11px] font-bold uppercase tracking-[2px] text-gray-400 hover:text-racing-red transition-colors flex items-center gap-1"
@@ -131,9 +134,11 @@ export const Navbar: React.FC = () => {
               </button>
             </form>
             <Link to="/products" onClick={() => setIsMenuOpen(false)} className="block px-3 py-2 text-[12px] font-bold uppercase tracking-[1px] text-gray-400 hover:text-racing-red">Store</Link>
+            <Link to="/track-order" onClick={() => setIsMenuOpen(false)} className="block px-3 py-2 text-[12px] font-bold uppercase tracking-[1px] text-gray-400 hover:text-racing-red">Track Order</Link>
             
             {user ? (
               <>
+                <Link to="/profile" onClick={() => setIsMenuOpen(false)} className="block px-3 py-2 text-[12px] font-bold uppercase tracking-[1px] text-gray-400 hover:text-racing-red">My Profile</Link>
                 <Link to="/orders" onClick={() => setIsMenuOpen(false)} className="block px-3 py-2 text-[12px] font-bold uppercase tracking-[1px] text-gray-400 hover:text-racing-red">My Orders</Link>
                 <div className="block px-3 py-2 text-[12px] font-bold text-gray-400 flex items-center gap-2 border-t border-slate-border mt-4 pt-4">
                   <User className="h-4 w-4" /> {user.email}
