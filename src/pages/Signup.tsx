@@ -24,9 +24,7 @@ export const Signup: React.FC = () => {
       if (error) throw error;
       
       setSuccess(true);
-      setTimeout(() => {
-        navigate('/login');
-      }, 3000);
+      // Removed automatic redirect to allow user to read the verification instruction
     } catch (err: any) {
       setError(err.message || 'Signup failed');
     } finally {
@@ -75,9 +73,10 @@ export const Signup: React.FC = () => {
               <motion.div 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="text-[11px] font-bold uppercase tracking-[1px] p-3 rounded-lg text-center border bg-green-500/10 border-green-500/20 text-green-500"
+                className="text-[11px] font-bold uppercase tracking-[1px] p-4 rounded-lg text-center border bg-green-500/10 border-green-500/20 text-green-500 space-y-2"
               >
-                Signup successful! Redirecting to login...
+                <p>Signup successful!</p>
+                <p className="text-white/60 lowercase font-normal italic">Please check your email to verify your account before logging in.</p>
               </motion.div>
             )}
 
