@@ -9,7 +9,7 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [appName, setAppName] = useState(() => {
-    return localStorage.getItem('app_name') || 'Alloy Legends';
+    return localStorage.getItem('app_name') || 'My Google AI Studio App';
   });
 
   useEffect(() => {
