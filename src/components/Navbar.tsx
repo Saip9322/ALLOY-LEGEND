@@ -39,15 +39,23 @@ export const Navbar: React.FC = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 py-1 group">
-            <img 
-              src="/logo.png" 
-              alt={appName} 
-              className="h-10 w-10 min-w-[40px] object-contain group-hover:scale-105 transition-transform"
-              onError={(e) => {
-                // Fallback if image doesn't exist
-                (e.target as HTMLImageElement).style.display = 'none';
-              }}
-            />
+            <div className="relative h-10 w-10 flex items-center justify-center">
+              <img 
+                src="/logo.png" 
+                alt={appName} 
+                className="h-10 w-10 min-w-[40px] object-contain group-hover:scale-105 transition-transform"
+                style={{ display: 'block' }}
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.display = 'none';
+                  // Show the fallback icon if image fails
+                  const fallback = e.currentTarget.parentElement?.querySelector('.logo-fallback');
+                  if (fallback) (fallback as HTMLElement).style.display = 'flex';
+                }}
+              />
+              <div className="logo-fallback hidden h-10 w-10 min-w-[40px] items-center justify-center bg-racing-red rounded-lg text-white font-black group-hover:scale-110 transition-transform shadow-lg shadow-racing-red/20 shadow-racing-red/20">
+                AL
+              </div>
+            </div>
             <span className="text-white font-black text-[18px] tracking-[1px] uppercase whitespace-nowrap">
               {appName.split(' ')[0]} <span className="text-racing-red">{appName.split(' ')[1] || ''}</span>
             </span>
