@@ -14,15 +14,14 @@ export interface Product {
 export const products: Product[] = [
   {
     id: '1',
-    name: 'BMW M4 GT3 #24 2022 IMSA Daytona 24 Hrs',
+    name: 'LB★WORKS Lamborghini Huracán GT GRAVITY',
     brand: 'MiniGT',
     scale: '1:64',
-    price: 1299,
-    image: 'https://minigt.tsm-models.com/upload/mini_gt/products_gif/product_pic_big/1641236529_394251.JPG',
-    description: 'Highly detailed 1:64 scale model of the iconic BMW M4 GT3 #24 BMW Team RLL 2022 IMSA Daytona 24 Hrs',
-    stock: 15,
+    price: 1799,
+    image: 'https://minigt.tsm-models.com/upload/picfile_list/fadce92c69a51e570ab6f876e27136cf20251212045827743.JPG',
+    description: 'Highly detailed 1:64 scale model of the iconic LB★WORKS Lamborghini Huracán GT GRAVITY',
+    stock: 5,
     featured: true,
-    trending: true,
   },
   {
     id: '2',
@@ -45,6 +44,16 @@ export const products: Product[] = [
     description: 'Classic Porsche 911 Rexy model featuring track racing and power',
     stock: 5,
     trending: true,
+  },
+  {
+    id: '4',
+    name: 'Hot Wheels 2020 Koenigsegg Jesko',
+    brand: 'Hotwheels Mainline',
+    scale: '1:64',
+    price: 270,
+    image: 'https://m.media-amazon.com/images/I/61D+3k8OXAL._SL1024_.jpg',
+    description: 'The legendary Jesko in Hotwheels Mainline with a detailed design that recreates the aggressive aerodynamics of the real-life 1,600-horsepower hypercar.',
+    stock: 1,
   },
 ];
 
