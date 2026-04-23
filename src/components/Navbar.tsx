@@ -38,9 +38,19 @@ export const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 font-black text-[20px] tracking-[2px] uppercase group">
-            <Car className="h-6 w-6 text-racing-red group-hover:scale-110 transition-transform" />
-            <span className="text-white">{appName.split(' ')[0]} <span className="text-racing-red">{appName.split(' ')[1] || ''}</span></span>
+          <Link to="/" className="flex items-center gap-3 py-1 group">
+            <img 
+              src="/logo.png" 
+              alt={appName} 
+              className="h-10 w-10 min-w-[40px] object-contain group-hover:scale-105 transition-transform"
+              onError={(e) => {
+                // Fallback if image doesn't exist
+                (e.target as HTMLImageElement).style.display = 'none';
+              }}
+            />
+            <span className="text-white font-black text-[18px] tracking-[1px] uppercase whitespace-nowrap">
+              {appName.split(' ')[0]} <span className="text-racing-red">{appName.split(' ')[1] || ''}</span>
+            </span>
           </Link>
 
           {/* Desktop Navigation */}

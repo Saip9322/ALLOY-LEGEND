@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Car, Mail, MessageCircle } from 'lucide-react';
+import { Car, Mail, MessageCircle, Instagram } from 'lucide-react';
 import { useAppContext } from '../context/AppContext';
 
 export const Footer: React.FC = () => {
@@ -17,9 +17,18 @@ export const Footer: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           <div className="col-span-1 md:col-span-1">
-            <Link to="/" className="flex items-center gap-2 font-black text-[24px] tracking-[2px] uppercase mb-6">
-              <Car className="h-7 w-7 text-racing-red" />
-              <span className="text-white">{appName.split(' ')[0]} <span className="text-racing-red">{appName.split(' ')[1] || ''}</span></span>
+            <Link to="/" className="flex items-center gap-3 mb-6 group">
+              <img 
+                src="/logo.png" 
+                alt={appName} 
+                className="h-12 w-12 object-contain group-hover:scale-105 transition-transform"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.display = 'none';
+                }}
+              />
+              <span className="text-white font-black text-[22px] tracking-[1px] uppercase group-hover:text-racing-red transition-colors">
+                {appName.split(' ')[0]} <span className="text-racing-red">{appName.split(' ')[1] || ''}</span>
+              </span>
             </Link>
             <p className="text-[13px] mb-8 leading-relaxed text-gray-500">
               Premium diecast models for true automotive enthusiasts. Curated selection of 1:64 scale masterpieces for the ultimate collector.
@@ -27,6 +36,12 @@ export const Footer: React.FC = () => {
             <div className="flex space-x-6">
               <a href="https://wa.me/917008916117" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-racing-red transition-all hover:scale-110" title="WhatsApp">
                 <MessageCircle className="h-5 w-5" />
+              </a>
+              <a href="https://www.instagram.com/alloylegends" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-racing-red transition-all hover:scale-110" title="Instagram">
+                <Instagram className="h-5 w-5" />
+              </a>
+              <a href="mailto:admin@alloylegends.com" className="text-gray-600 hover:text-racing-red transition-all hover:scale-110" title="Email">
+                <Mail className="h-5 w-5" />
               </a>
             </div>
           </div>
@@ -48,7 +63,7 @@ export const Footer: React.FC = () => {
             <ul className="space-y-3 text-[12px] font-bold uppercase tracking-[1px]">
               <li><a href="#" className="hover:text-racing-red transition-colors">FAQ</a></li>
               <li><Link to="/orders" className="hover:text-racing-red transition-colors">Track Order</Link></li>
-              <li><a href="https://wa.me/917008916117" target="_blank" rel="noopener noreferrer" className="hover:text-racing-red transition-colors">Contact Us</a></li>
+              <li><a href="mailto:admin@alloylegends.com" className="hover:text-racing-red transition-colors">Contact Us</a></li>
             </ul>
           </div>
 
