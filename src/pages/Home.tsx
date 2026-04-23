@@ -122,8 +122,8 @@ export const Home: React.FC = () => {
           >
             Shop by <span className="text-racing-red">Brand</span>
           </motion.h2>
-          <motion.div variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true }} className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-6">
-            {['MiniGT', 'Inno64', 'Tarmac Works', 'Hotwheels Mainline', 'Hot wheels RLC', 'Elite64', 'CM models'].map((brand) => (
+          <motion.div variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true }} className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+            {['MiniGT', 'Inno64', 'Tarmac Works', 'Hotwheels Mainline', 'Hot wheels RLC', 'Elite64', 'CM models', 'PreOrder', 'Miscellaneous'].map((brand) => (
               <motion.div key={brand} variants={itemVariants} whileHover={{ y: -5 }}>
                 <Link 
                   to={`/products?brand=${brand}`}

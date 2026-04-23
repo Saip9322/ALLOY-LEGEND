@@ -40,7 +40,7 @@ export const ProductList: React.FC = () => {
     );
   }
 
-  const brands = Array.from(new Set(allProducts.map(p => p.brand)));
+  const brands = Array.from(new Set([...allProducts.map(p => p.brand), 'PreOrder', 'Miscellaneous']));
   const scales = Array.from(new Set(allProducts.map(p => p.scale)));
 
   const filteredProducts = allProducts.filter(product => {

@@ -48,5 +48,5 @@ export const products: Product[] = [
   },
 ];
 
-export const brands = Array.from(new Set(products.map(p => p.brand)));
+export const brands = Array.from(new Set([...products.map(p => p.brand), 'PreOrder', 'Miscellaneous']));
 export const scales = Array.from(new Set(products.map(p => p.scale)));
