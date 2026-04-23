@@ -39,20 +39,23 @@ export const Navbar: React.FC = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 py-1 group">
-            <div className="relative h-10 w-10 flex items-center justify-center">
+            <div className="relative h-10 w-10 flex items-center justify-center bg-white rounded-lg p-1 shadow-inner">
               <img 
-                src="/logo.png" 
+                src="/logo.png?v=1.1" 
                 alt={appName} 
-                className="h-10 w-10 min-w-[40px] object-contain group-hover:scale-105 transition-transform"
+                className="h-full w-full object-contain group-hover:scale-110 transition-transform"
                 style={{ display: 'block' }}
+                loading="eager"
                 onError={(e) => {
                   (e.target as HTMLImageElement).style.display = 'none';
                   // Show the fallback icon if image fails
                   const fallback = e.currentTarget.parentElement?.querySelector('.logo-fallback');
                   if (fallback) (fallback as HTMLElement).style.display = 'flex';
+                  // Remove bg-white if fallback is shown
+                  e.currentTarget.parentElement?.classList.remove('bg-white');
                 }}
               />
-              <div className="logo-fallback hidden h-10 w-10 min-w-[40px] items-center justify-center bg-racing-red rounded-lg text-white font-black group-hover:scale-110 transition-transform shadow-lg shadow-racing-red/20 shadow-racing-red/20">
+              <div className="logo-fallback hidden h-10 w-10 min-w-[40px] items-center justify-center bg-racing-red rounded-lg text-white font-black group-hover:scale-110 transition-transform shadow-lg shadow-racing-red/20">
                 AL
               </div>
             </div>

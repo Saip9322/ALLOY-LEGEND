@@ -18,19 +18,22 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           <div className="col-span-1 md:col-span-1">
             <Link to="/" className="flex items-center gap-3 mb-6 group">
-              <div className="relative h-12 w-12 flex items-center justify-center">
+              <div className="relative h-12 w-12 flex items-center justify-center bg-white rounded-xl p-1 shadow-inner">
                 <img 
-                  src="/logo.png" 
+                  src="/logo.png?v=1.1" 
                   alt={appName} 
-                  className="h-12 w-12 object-contain group-hover:scale-105 transition-transform"
+                  className="h-full w-full object-contain group-hover:scale-110 transition-transform"
                   style={{ display: 'block' }}
+                  loading="eager"
                   onError={(e) => {
                     (e.target as HTMLImageElement).style.display = 'none';
                     const fallback = e.currentTarget.parentElement?.querySelector('.logo-fallback');
                     if (fallback) (fallback as HTMLElement).style.display = 'flex';
+                    // Remove bg-white if fallback is shown
+                    e.currentTarget.parentElement?.classList.remove('bg-white');
                   }}
                 />
-                <div className="logo-fallback hidden h-12 w-12 items-center justify-center bg-racing-red rounded-lg text-white font-black group-hover:scale-110 transition-transform shadow-lg shadow-racing-red/20 uppercase">
+                <div className="logo-fallback hidden h-12 w-12 items-center justify-center bg-racing-red rounded-xl text-white font-black group-hover:scale-110 transition-transform shadow-lg shadow-racing-red/20 uppercase">
                   AL
                 </div>
               </div>

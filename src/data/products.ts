@@ -53,8 +53,9 @@ export const products: Product[] = [
     price: 270,
     image: 'https://m.media-amazon.com/images/I/61D+3k8OXAL._SL1024_.jpg',
     description: 'The legendary Jesko in Hotwheels Mainline with a detailed design that recreates the aggressive aerodynamics of the real-life 1,600-horsepower hypercar.',
-    stock: 1,
-  },
+    stock: 12,
+    featured: true,
+  }
 ];
 
 export const brands = Array.from(new Set([...products.map(p => p.brand), 'PreOrder', 'Miscellaneous']));
