@@ -41,7 +41,7 @@ export const Navbar: React.FC = () => {
           <Link to="/" className="flex items-center gap-3 py-1 group">
             <div className="relative h-10 w-10 flex items-center justify-center bg-white rounded-lg p-1 shadow-inner">
               <img 
-                src="/logo.png?v=1.1" 
+                src="/logo.svg" 
                 alt={appName} 
                 className="h-full w-full object-contain group-hover:scale-110 transition-transform"
                 style={{ display: 'block' }}

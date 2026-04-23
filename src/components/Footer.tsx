@@ -20,7 +20,7 @@ export const Footer: React.FC = () => {
             <Link to="/" className="flex items-center gap-3 mb-6 group">
               <div className="relative h-12 w-12 flex items-center justify-center bg-white rounded-xl p-1 shadow-inner">
                 <img 
-                  src="/logo.png?v=1.1" 
+                  src="/logo.svg" 
                   alt={appName} 
                   className="h-full w-full object-contain group-hover:scale-110 transition-transform"
                   style={{ display: 'block' }}
