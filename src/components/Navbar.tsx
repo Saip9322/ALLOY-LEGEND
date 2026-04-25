@@ -4,6 +4,7 @@ import { ShoppingCart, Search, Menu, X, Car, User, LogOut } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { useAppContext } from '../context/AppContext';
+import logoSrc from '../assets/logo1.svg';
 
 export const Navbar: React.FC = () => {
   const { totalItems } = useCart();
@@ -41,7 +42,7 @@ export const Navbar: React.FC = () => {
           <Link to="/" className="flex items-center gap-3 py-1 group">
             <div className="relative h-10 w-10 flex items-center justify-center bg-white rounded-lg p-1 shadow-inner">
               <img 
-                src="/logo.svg" 
+                src={logoSrc} 
                 alt={appName} 
                 className="h-full w-full object-contain group-hover:scale-110 transition-transform"
                 style={{ display: 'block' }}

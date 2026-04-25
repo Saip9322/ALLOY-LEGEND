@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Car, Mail, MessageCircle, Instagram } from 'lucide-react';
 import { useAppContext } from '../context/AppContext';
+import logoSrc from '../assets/logo1.svg';
 
 export const Footer: React.FC = () => {
   const { appName } = useAppContext();
@@ -20,7 +21,7 @@ export const Footer: React.FC = () => {
             <Link to="/" className="flex items-center gap-3 mb-6 group">
               <div className="relative h-12 w-12 flex items-center justify-center bg-white rounded-xl p-1 shadow-inner">
                 <img 
-                  src="/logo.svg" 
+                  src={logoSrc} 
                   alt={appName} 
                   className="h-full w-full object-contain group-hover:scale-110 transition-transform"
                   style={{ display: 'block' }}
