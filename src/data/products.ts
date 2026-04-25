@@ -9,6 +9,7 @@ export interface Product {
   stock: number;
   featured?: boolean;
   trending?: boolean;
+  newArrival?: boolean;
 }
 
 export const products: Product[] = [
@@ -22,6 +23,7 @@ export const products: Product[] = [
     description: 'Highly detailed 1:64 scale model of the iconic LB★WORKS Lamborghini Huracán GT GRAVITY',
     stock: 5,
     featured: true,
+    newArrival: true,
   },
   {
     id: '2',
@@ -33,6 +35,7 @@ export const products: Product[] = [
     description: 'Precision crafted  Lamborghini Aventador with authentic detailing and premium display base.',
     stock: 3,
     trending: true,
+    newArrival: true,
   },
   {
     id: '3',
@@ -44,6 +47,7 @@ export const products: Product[] = [
     description: 'Classic Porsche 911 Rexy model featuring track racing and power',
     stock: 5,
     trending: true,
+    newArrival: true,
   },
   {
     id: '4',
