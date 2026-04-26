@@ -32,7 +32,7 @@ import { AdminSettings } from './pages/admin/AdminSettings';
 import { ComingSoon } from './pages/ComingSoon';
 
 // Set to true to hide all site content and show the Coming Soon page
-const IS_COMING_SOON = true;
+const IS_COMING_SOON = false;
 
 export default function App() {
   if (IS_COMING_SOON) {

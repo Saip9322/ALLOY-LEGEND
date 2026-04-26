@@ -82,7 +82,7 @@ export const ComingSoon: React.FC = () => {
           className="mt-24 flex items-center justify-center gap-2 text-[10px] uppercase tracking-[4px] font-black"
         >
           <Car size={16} />
-          <span>© 2024 Alloy Legends Precision Models</span>
+          <span>© 2026 Alloy Legends Precision Models</span>
         </motion.div>
       </div>
     </div>
