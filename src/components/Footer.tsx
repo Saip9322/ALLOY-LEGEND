@@ -44,7 +44,7 @@ export const Footer: React.FC = () => {
               Premium diecast models for true automotive enthusiasts. Curated selection of 1:64 scale masterpieces for the ultimate collector.
             </p>
             <div className="flex space-x-6">
-              <a href="https://wa.me/917008916117" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-racing-red transition-all hover:scale-110" title="WhatsApp">
+              <a href="https://chat.whatsapp.com/CH3BsklC2qP0b6RfbxG7gW" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-racing-red transition-all hover:scale-110" title="Join WhatsApp Group">
                 <MessageCircle className="h-5 w-5" />
               </a>
               <a href="https://www.instagram.com/alloylegends" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-racing-red transition-all hover:scale-110" title="Instagram">
