@@ -45,6 +45,8 @@ export const ProductList: React.FC = () => {
   const scales = Array.from(new Set(allProducts.map(p => p.scale)));
 
   const filteredProducts = allProducts.filter(product => {
+    if (product.hidden) return false;
+    
     const matchesBrand = selectedBrand ? product.brand === selectedBrand : true;
     const matchesScale = selectedScale ? product.scale === selectedScale : true;
     const matchesSearch = searchQuery 

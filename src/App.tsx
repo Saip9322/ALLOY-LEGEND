@@ -11,6 +11,8 @@ import { ProductProvider } from './context/ProductContext';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { ScrollToTop } from './components/ScrollToTop';
+import { WhatsAppWidget } from './components/WhatsAppWidget';
+import { WelcomePopup } from './components/WelcomePopup';
 
 import { AppProvider } from './context/AppContext';
 import { Home } from './pages/Home';
@@ -80,6 +82,8 @@ export default function App() {
                 </Routes>
               </main>
               <Footer />
+              <WhatsAppWidget />
+              <WelcomePopup />
             </div>
           </Router>
         </CartProvider>

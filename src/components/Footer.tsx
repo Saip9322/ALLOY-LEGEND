@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Car, Mail, MessageCircle, Instagram } from 'lucide-react';
+import { Mail, Instagram } from 'lucide-react';
+import { WhatsAppIcon } from './icons/WhatsAppIcon';
 import { useAppContext } from '../context/AppContext';
 import logoSrc from '../assets/logo1.svg';
 
@@ -45,7 +46,7 @@ export const Footer: React.FC = () => {
             </p>
             <div className="flex space-x-6">
               <a href="https://chat.whatsapp.com/CH3BsklC2qP0b6RfbxG7gW" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-racing-red transition-all hover:scale-110" title="Join WhatsApp Group">
-                <MessageCircle className="h-5 w-5" />
+                <WhatsAppIcon className="h-5 w-5" />
               </a>
               <a href="https://www.instagram.com/alloylegends" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-racing-red transition-all hover:scale-110" title="Instagram">
                 <Instagram className="h-5 w-5" />

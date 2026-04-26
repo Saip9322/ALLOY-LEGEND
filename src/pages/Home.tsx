@@ -17,7 +17,7 @@ export const Home: React.FC = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  const newArrivals = allProducts.filter(p => p.newArrival).slice(0, 5);
+  const newArrivals = allProducts.filter(p => p.newArrival && !p.hidden).slice(0, 5);
 
   useEffect(() => {
     if (newArrivals.length > 0) {
@@ -36,8 +36,8 @@ export const Home: React.FC = () => {
     );
   }
 
-  const featuredProducts = allProducts.filter(p => p.featured).slice(0, 4);
-  const trendingProducts = allProducts.filter(p => p.trending).slice(0, 4);
+  const featuredProducts = allProducts.filter(p => p.featured && !p.hidden).slice(0, 4);
+  const trendingProducts = allProducts.filter(p => p.trending && !p.hidden).slice(0, 4);
 
   const containerVariants = {
     hidden: { opacity: 0 },

@@ -20,7 +20,11 @@ export const ProductDetail: React.FC = () => {
   useEffect(() => {
     if (!id) return;
     const foundProduct = getProductById(id);
-    setProduct(foundProduct || null);
+    if (foundProduct?.hidden) {
+      setProduct(null);
+    } else {
+      setProduct(foundProduct || null);
+    }
     setSelectedImageIndex(0);
     
     const timer = setTimeout(() => {

@@ -11,6 +11,7 @@ export interface Product {
   featured?: boolean;
   trending?: boolean;
   newArrival?: boolean;
+  hidden?: boolean;
 }
 
 const rawProducts: Omit<Product, 'id'>[] = [
@@ -169,19 +170,6 @@ const rawProducts: Omit<Product, 'id'>[] = [
     featured: true,
   },
   {
-    name: 'Toyota Supra (A80) RZ Super White II',
-    brand: 'Hobby Japan',
-    scale: '1:64',
-    price: 2450,
-    image: 'https://cdn.shopify.com/s/files/1/0610/0117/1163/products/HJ641016W_1_1024x1024.jpg?v=1645000000',
-    images: [
-      'https://cdn.shopify.com/s/files/1/0610/0117/1163/products/HJ641016W_1_1024x1024.jpg?v=1645000000'
-    ],
-    description: 'Hobby Japan Toyota Supra A80. Exquisite detail with engine parts.',
-    stock: 2,
-    trending: true,
-  },
-  {
     name: 'BMW M8 GTE Team MTEK 2019',
     brand: 'Para64',
     scale: '1:64',
@@ -193,6 +181,20 @@ const rawProducts: Omit<Product, 'id'>[] = [
     description: 'Para64 BMW M8 GTE. Officially licensed model with high quality rolling wheels.',
     stock: 5,
     newArrival: true,
+    hidden: true,
+  },
+  {
+    name: 'Mega Gear Roxy Hauler-Unsealed',
+    brand: 'Miscellaneous',
+    scale: '1:64',
+    price: 3499,
+    image: 'https://diecastchennai396.in/cdn/shop/files/8633.png?v=1776433910&width=1346',
+    images: [
+      'https://diecastchennai396.in/cdn/shop/files/8633.png?v=1776433910&width=1346'
+    ],
+    description: 'Detailed Mega Gear Roxy Hauler, a perfect addition for transport dioramas and collections.',
+    stock: 1,
+    newArrival: true,
   }
 ];
 
@@ -201,5 +203,5 @@ export const products: Product[] = rawProducts.map((p, index) => ({
   id: (index + 1).toString()
 }));
 
-export const brands = Array.from(new Set([...products.map(p => p.brand), 'Tarmac Works', 'Inno64', 'Pop Race', 'Kaido House', 'Para64', 'Hobby Japan', 'PreOrder']));
+export const brands = Array.from(new Set([...products.map(p => p.brand), 'Tarmac Works', 'Inno64', 'Pop Race', 'Kaido House', 'Para64', 'Miscellaneous', 'PreOrder']));
 export const scales = [];

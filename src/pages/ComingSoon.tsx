@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Mail, Instagram, MessageCircle, Car } from 'lucide-react';
+import { Mail, Instagram, Car } from 'lucide-react';
+import { WhatsAppIcon } from '../components/icons/WhatsAppIcon';
 import logoSrc from '../assets/logo1.svg';
 
 export const ComingSoon: React.FC = () => {
@@ -66,7 +67,7 @@ export const ComingSoon: React.FC = () => {
               <Instagram className="h-6 w-6 text-white group-hover:scale-110 transition-transform" />
             </a>
             <a href="https://chat.whatsapp.com/CH3BsklC2qP0b6RfbxG7gW" target="_blank" rel="noopener noreferrer" className="p-4 bg-white/5 hover:bg-racing-red border border-white/10 hover:border-racing-red rounded-2xl transition-all duration-300 group">
-              <MessageCircle className="h-6 w-6 text-white group-hover:scale-110 transition-transform" />
+              <WhatsAppIcon className="h-6 w-6 text-white group-hover:scale-110 transition-transform" />
             </a>
             <a href="mailto:admin@alloylegends.com" className="p-4 bg-white/5 hover:bg-racing-red border border-white/10 hover:border-racing-red rounded-2xl transition-all duration-300 group">
               <Mail className="h-6 w-6 text-white group-hover:scale-110 transition-transform" />
