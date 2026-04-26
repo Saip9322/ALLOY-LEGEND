@@ -107,14 +107,24 @@ const rawProducts: Omit<Product, 'id'>[] = [
     price: 270,
     image: 'https://m.media-amazon.com/images/I/61D+3k8OXAL._SL1024_.jpg',
     images: [
-      'https://m.media-amazon.com/images/I/61D+3k8OXAL._SL1024_.jpg',
-      'https://m.media-amazon.com/images/I/61D+3k8OXAL._SL1024_.jpg',
-      'https://m.media-amazon.com/images/I/61D+3k8OXAL._SL1024_.jpg',
       'https://m.media-amazon.com/images/I/61D+3k8OXAL._SL1024_.jpg'
     ],
     description: 'The legendary Jesko in Hotwheels Mainline with a detailed design that recreates the aggressive aerodynamics of the real-life 1,600-horsepower hypercar.',
     stock: 12,
     featured: true,
+  },
+  {
+    name: 'Ferrari SF90 Stradale',
+    brand: 'Hotwheels Mainline',
+    scale: '1:64',
+    price: 750,
+    image: '/images/products/hotwheels-mainline/ferrari-sf90.jpeg',
+    images: [
+      '/images/products/hotwheels-mainline/ferrari-sf90.jpeg'
+    ],
+    description: 'Detailed Hot Wheels Mainline Ferrari SF90 Stradale in stunning blue. A 1:64 scale masterpiece for any collection.',
+    stock: 1,
+    newArrival: true,
   },
   {
     name: 'Nissan Skyline GT-R (R34) R-Tune Silver',
