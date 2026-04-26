@@ -1,24 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ShoppingCart, ArrowLeft, Check, AlertCircle, Loader2 } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { useCart } from '../context/CartContext';
 import { useProducts } from '../context/ProductContext';
+import { Product } from '../data/products';
 
 export const ProductDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { addToCart } = useCart();
   const { getProductById } = useProducts();
-  const [product, setProduct] = useState<any>(null);
+  const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
   const [isAdded, setIsAdded] = useState(false);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
   useEffect(() => {
     if (!id) return;
     const foundProduct = getProductById(id);
     setProduct(foundProduct || null);
+    setSelectedImageIndex(0);
     
     const timer = setTimeout(() => {
       setLoading(false);
@@ -70,35 +73,65 @@ export const ProductDetail: React.FC = () => {
 
         <div className="bg-slate-dark border border-slate-border rounded-3xl overflow-hidden shadow-2xl">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
-            {/* Product Image */}
+            {/* Product Image Gallery */}
             <motion.div 
-              initial={{ x: -50, opacity: 0 }}
+              initial={{ x: -100, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-              className="relative aspect-square md:aspect-auto md:h-full bg-midnight"
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="relative bg-midnight flex flex-col md:flex-row p-6 lg:p-10 gap-6"
             >
-              <motion.img 
-                initial={{ scale: 0.9 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 0.5 }}
-                src={product.image} 
-                alt={product.name} 
-                className="w-full h-full object-contain opacity-90"
-                referrerPolicy="no-referrer"
-              />
-              {product.stock <= 0 && (
-                <div className="absolute inset-0 bg-midnight/80 flex items-center justify-center backdrop-blur-sm">
-                  <span className="text-white font-black text-[24px] uppercase tracking-[4px] border-4 border-racing-red text-racing-red px-8 py-4 rounded-xl">Sold Out</span>
-                </div>
-              )}
+              {/* Thumbnails */}
+              <div className="flex md:flex-col gap-4 order-2 md:order-1 overflow-x-auto md:overflow-x-visible pb-2 md:pb-0 scrollbar-hide">
+                {product.images?.map((img: string, idx: number) => (
+                  <button
+                    key={idx}
+                    onClick={() => setSelectedImageIndex(idx)}
+                    className={`relative w-20 h-20 md:w-24 md:h-24 rounded-xl overflow-hidden border-2 transition-all shrink-0 ${
+                      selectedImageIndex === idx 
+                        ? 'border-racing-red scale-105 shadow-lg shadow-racing-red/20' 
+                        : 'border-slate-border opacity-50 hover:opacity-100 hover:border-gray-500'
+                    }`}
+                  >
+                    <img 
+                      src={img} 
+                      alt={`${product.name} - view ${idx + 1}`} 
+                      className="w-full h-full object-contain p-2"
+                      referrerPolicy="no-referrer"
+                    />
+                  </button>
+                ))}
+              </div>
+
+              {/* Main Image Display */}
+              <div className="flex-1 relative aspect-square rounded-2xl overflow-hidden bg-slate-dark/30 border border-slate-border order-1 md:order-2 group">
+                <AnimatePresence mode="wait">
+                  <motion.img 
+                    key={selectedImageIndex}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 1.05 }}
+                    transition={{ duration: 0.3 }}
+                    src={product.images ? product.images[selectedImageIndex] : product.image} 
+                    alt={product.name} 
+                    className="w-full h-full object-contain p-8 lg:p-12 drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] group-hover:scale-105 transition-transform duration-700"
+                    referrerPolicy="no-referrer"
+                  />
+                </AnimatePresence>
+
+                {product.stock <= 0 && (
+                  <div className="absolute inset-0 bg-midnight/80 flex items-center justify-center backdrop-blur-sm z-10">
+                    <span className="text-white font-black text-[24px] uppercase tracking-[4px] border-4 border-racing-red text-racing-red px-8 py-4 rounded-xl">Sold Out</span>
+                  </div>
+                )}
+              </div>
             </motion.div>
 
             {/* Product Info */}
             <motion.div 
-              initial={{ x: 50, opacity: 0 }}
+              initial={{ x: 100, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
-              className="p-10 md:p-16 flex flex-col justify-center"
+              transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
+              className="p-10 md:p-16 flex flex-col justify-center border-t md:border-t-0 md:border-l border-slate-border"
             >
               <motion.div 
                 initial={{ y: 20, opacity: 0 }}

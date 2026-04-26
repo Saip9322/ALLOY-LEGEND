@@ -5,6 +5,7 @@ export interface Product {
   scale: string;
   price: number;
   image: string;
+  images: string[];
   description: string;
   stock: number;
   featured?: boolean;
@@ -20,6 +21,12 @@ export const products: Product[] = [
     scale: '1:64',
     price: 1799,
     image: 'https://minigt.tsm-models.com/upload/picfile_list/fadce92c69a51e570ab6f876e27136cf20251212045827743.JPG',
+    images: [
+      'https://minigt.tsm-models.com/upload/picfile_list/fadce92c69a51e570ab6f876e27136cf20251212045827743.JPG',
+      'https://minigt.tsm-models.com/upload/picfile_list/fadce92c69a51e570ab6f876e27136cf20251212045827743.JPG',
+      'https://minigt.tsm-models.com/upload/picfile_list/fadce92c69a51e570ab6f876e27136cf20251212045827743.JPG',
+      'https://minigt.tsm-models.com/upload/picfile_list/fadce92c69a51e570ab6f876e27136cf20251212045827743.JPG'
+    ],
     description: 'Highly detailed 1:64 scale model of the iconic LB★WORKS Lamborghini Huracán GT GRAVITY',
     stock: 5,
     featured: true,
@@ -31,7 +38,13 @@ export const products: Product[] = [
     brand: 'MiniGT',
     scale: '1:64',
     price: 1650,
-    image: 'https://minigt.tsm-models.com/upload/picfile_list/4018f01581ac26d0f95ee2f5293753c820250729213752728.JPG',
+    image: 'https://www.toycollectorsindia.com/cdn/shop/files/rn-image_picker_lib_temp_fb97d18c-99a4-4a4e-bafa-0728c9c3887d.png?v=1775565032',
+    images: [
+      'https://www.toycollectorsindia.com/cdn/shop/files/rn-image_picker_lib_temp_fb97d18c-99a4-4a4e-bafa-0728c9c3887d.png?v=1775565032',
+      'https://minigt.tsm-models.com/upload/picfile_list/4018f01581ac26d0f95ee2f5293753c820250729213752728.JPG',
+      'https://minigt.tsm-models.com/upload/picfile_list/af04a7ebde2cf05e3e9cd4f4984039e720250729213752729.JPG',
+      'https://minigt.tsm-models.com/upload/picfile_list/83282a1093cbaef8bf40c6995e3c755320250729213752731.JPG'
+    ],
     description: 'Precision crafted  Lamborghini Aventador with authentic detailing and premium display base.',
     stock: 3,
     trending: true,
@@ -44,6 +57,12 @@ export const products: Product[] = [
     scale: '1:64',
     price: 1649,
     image: 'https://minigt.tsm-models.com/upload/picfile_list/7a866d7476fd3b25d6a1625008a1941220250703173419311.JPG',
+    images: [
+      'https://minigt.tsm-models.com/upload/picfile_list/7a866d7476fd3b25d6a1625008a1941220250703173419311.JPG',
+      'https://minigt.tsm-models.com/upload/picfile_list/7a866d7476fd3b25d6a1625008a1941220250703173419311.JPG',
+      'https://minigt.tsm-models.com/upload/picfile_list/7a866d7476fd3b25d6a1625008a1941220250703173419311.JPG',
+      'https://minigt.tsm-models.com/upload/picfile_list/7a866d7476fd3b25d6a1625008a1941220250703173419311.JPG'
+    ],
     description: 'Classic Porsche 911 Rexy model featuring track racing and power',
     stock: 5,
     trending: true,
@@ -56,6 +75,12 @@ export const products: Product[] = [
     scale: '1:64',
     price: 270,
     image: 'https://m.media-amazon.com/images/I/61D+3k8OXAL._SL1024_.jpg',
+    images: [
+      'https://m.media-amazon.com/images/I/61D+3k8OXAL._SL1024_.jpg',
+      'https://m.media-amazon.com/images/I/61D+3k8OXAL._SL1024_.jpg',
+      'https://m.media-amazon.com/images/I/61D+3k8OXAL._SL1024_.jpg',
+      'https://m.media-amazon.com/images/I/61D+3k8OXAL._SL1024_.jpg'
+    ],
     description: 'The legendary Jesko in Hotwheels Mainline with a detailed design that recreates the aggressive aerodynamics of the real-life 1,600-horsepower hypercar.',
     stock: 12,
     featured: true,
