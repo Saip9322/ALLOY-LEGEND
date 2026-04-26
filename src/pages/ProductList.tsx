@@ -16,6 +16,7 @@ export const ProductList: React.FC = () => {
   
   const [selectedBrand, setSelectedBrand] = useState(initialBrand);
   const [selectedScale, setSelectedScale] = useState('');
+  const [selectedAvailability, setSelectedAvailability] = useState('');
   const [searchQuery, setSearchQuery] = useState(initialSearch);
   const [sortBy, setSortBy] = useState('featured');
 
@@ -51,7 +52,12 @@ export const ProductList: React.FC = () => {
         product.brand.toLowerCase().includes(searchQuery.toLowerCase())
       : true;
     
-    return matchesBrand && matchesScale && matchesSearch;
+    let matchesAvailability = true;
+    if (selectedAvailability === 'in-stock') matchesAvailability = product.stock > 0 && product.brand !== 'PreOrder';
+    if (selectedAvailability === 'out-of-stock') matchesAvailability = product.stock === 0 && product.brand !== 'PreOrder';
+    if (selectedAvailability === 'pre-order') matchesAvailability = product.brand === 'PreOrder';
+
+    return matchesBrand && matchesScale && matchesSearch && matchesAvailability;
   }).sort((a, b) => {
     if (sortBy === 'price-low') return a.price - b.price;
     if (sortBy === 'price-high') return b.price - a.price;
@@ -62,6 +68,7 @@ export const ProductList: React.FC = () => {
   const clearFilters = () => {
     setSelectedBrand('');
     setSelectedScale('');
+    setSelectedAvailability('');
     setSearchQuery('');
     setSearchParams({});
   };
@@ -133,11 +140,69 @@ export const ProductList: React.FC = () => {
             >
               <div className="flex justify-between items-center mb-8">
                 <h2 className="text-[14px] font-black uppercase tracking-[2px] text-white">Filters</h2>
-                {(selectedBrand || selectedScale || searchQuery) && (
+                {(selectedBrand || selectedScale || selectedAvailability || searchQuery) && (
                   <button onClick={clearFilters} className="text-[10px] text-racing-red hover:text-white uppercase font-bold tracking-[1px] transition-colors">
                     Reset
                   </button>
                 )}
+              </div>
+
+              <div className="mb-10">
+                <h3 className="text-[10px] font-black uppercase text-gray-600 mb-5 tracking-[3px]">Availability</h3>
+                <div className="space-y-4">
+                  <label className="flex items-center justify-between cursor-pointer group">
+                    <div className="flex items-center">
+                      <input 
+                        type="radio" 
+                        name="availability" 
+                        checked={selectedAvailability === ''}
+                        onChange={() => setSelectedAvailability('')}
+                        className="w-4 h-4 text-racing-red bg-midnight border-slate-border focus:ring-racing-red focus:ring-offset-midnight transition-all"
+                      />
+                      <span className="ml-4 text-[13px] font-medium text-gray-400 group-hover:text-white transition-colors">All Units</span>
+                    </div>
+                  </label>
+                  <label className="flex items-center justify-between cursor-pointer group">
+                    <div className="flex items-center">
+                      <input 
+                        type="radio" 
+                        name="availability" 
+                        checked={selectedAvailability === 'in-stock'}
+                        onChange={() => setSelectedAvailability('in-stock')}
+                        className="w-4 h-4 text-racing-red bg-midnight border-slate-border focus:ring-racing-red focus:ring-offset-midnight transition-all"
+                      />
+                      <span className="ml-4 text-[13px] font-medium text-gray-400 group-hover:text-white transition-colors">In Stock</span>
+                    </div>
+                  </label>
+                  <label className="flex items-center justify-between cursor-pointer group">
+                    <div className="flex items-center">
+                      <input 
+                        type="radio" 
+                        name="availability" 
+                        checked={selectedAvailability === 'out-of-stock'}
+                        onChange={() => setSelectedAvailability('out-of-stock')}
+                        className="w-4 h-4 text-racing-red bg-midnight border-slate-border focus:ring-racing-red focus:ring-offset-midnight transition-all"
+                      />
+                      <span className="ml-4 text-[13px] font-medium text-gray-400 group-hover:text-white transition-colors">Out of Stock</span>
+                    </div>
+                  </label>
+                  <label className="flex items-center justify-between cursor-pointer group">
+                    <div className="flex items-center">
+                      <input 
+                        type="radio" 
+                        name="availability" 
+                        checked={selectedAvailability === 'pre-order'}
+                        onChange={() => {
+                          setSelectedAvailability('pre-order');
+                          // If user specifically wants "Pre Orders tab", we can also clear brand or filter by brand
+                          setSelectedBrand('PreOrder');
+                        }}
+                        className="w-4 h-4 text-racing-red bg-midnight border-slate-border focus:ring-racing-red focus:ring-offset-midnight transition-all"
+                      />
+                      <span className="ml-4 text-[13px] font-medium text-gray-400 group-hover:text-white transition-colors">Pre Orders</span>
+                    </div>
+                  </label>
+                </div>
               </div>
 
               <div className="mb-10">
@@ -169,41 +234,6 @@ export const ProductList: React.FC = () => {
                       </div>
                       <span className="text-gray-600 text-[11px] font-mono">
                         {allProducts.filter(p => p.brand === brand).length}
-                      </span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <h3 className="text-[10px] font-black uppercase text-gray-600 mb-5 tracking-[3px]">Scale</h3>
-                <div className="space-y-4">
-                  <label className="flex items-center justify-between cursor-pointer group">
-                    <div className="flex items-center">
-                      <input 
-                        type="radio" 
-                        name="scale" 
-                        checked={selectedScale === ''}
-                        onChange={() => setSelectedScale('')}
-                        className="w-4 h-4 text-racing-red bg-midnight border-slate-border focus:ring-racing-red focus:ring-offset-midnight transition-all"
-                      />
-                      <span className="ml-4 text-[13px] font-medium text-gray-400 group-hover:text-white transition-colors">All Scales</span>
-                    </div>
-                  </label>
-                  {scales.map(scale => (
-                    <label key={scale} className="flex items-center justify-between cursor-pointer group">
-                      <div className="flex items-center">
-                        <input 
-                          type="radio" 
-                          name="scale" 
-                          checked={selectedScale === scale}
-                          onChange={() => setSelectedScale(scale)}
-                          className="w-4 h-4 text-racing-red bg-midnight border-slate-border focus:ring-racing-red focus:ring-offset-midnight transition-all"
-                        />
-                        <span className="ml-4 text-[13px] font-medium text-gray-400 group-hover:text-white transition-colors">{scale}</span>
-                      </div>
-                      <span className="text-gray-600 text-[11px] font-mono">
-                        {allProducts.filter(p => p.scale === scale).length}
                       </span>
                     </label>
                   ))}
