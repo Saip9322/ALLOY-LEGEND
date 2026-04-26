@@ -62,13 +62,13 @@ export const ComingSoon: React.FC = () => {
         >
           <p className="text-gray-500 text-sm uppercase tracking-[2px] mb-6">Connect with us</p>
           <div className="flex gap-6">
-            <a href="#" className="p-4 bg-white/5 hover:bg-racing-red border border-white/10 hover:border-racing-red rounded-2xl transition-all duration-300 group">
+            <a href="https://www.instagram.com/alloylegends" className="p-4 bg-white/5 hover:bg-racing-red border border-white/10 hover:border-racing-red rounded-2xl transition-all duration-300 group">
               <Instagram className="h-6 w-6 text-white group-hover:scale-110 transition-transform" />
             </a>
             <a href="https://chat.whatsapp.com/CH3BsklC2qP0b6RfbxG7gW" target="_blank" rel="noopener noreferrer" className="p-4 bg-white/5 hover:bg-racing-red border border-white/10 hover:border-racing-red rounded-2xl transition-all duration-300 group">
               <MessageCircle className="h-6 w-6 text-white group-hover:scale-110 transition-transform" />
             </a>
-            <a href="mailto:contact@alloylegends.com" className="p-4 bg-white/5 hover:bg-racing-red border border-white/10 hover:border-racing-red rounded-2xl transition-all duration-300 group">
+            <a href="mailto:admin@alloylegends.com" className="p-4 bg-white/5 hover:bg-racing-red border border-white/10 hover:border-racing-red rounded-2xl transition-all duration-300 group">
               <Mail className="h-6 w-6 text-white group-hover:scale-110 transition-transform" />
             </a>
           </div>
