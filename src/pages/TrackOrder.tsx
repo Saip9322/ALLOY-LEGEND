@@ -186,8 +186,6 @@ export const TrackOrder: React.FC = () => {
                   <h4 className="text-[10px] text-gray-500 font-bold uppercase tracking-[1px] mb-3">Shipping To</h4>
                   <div className="text-[13px] text-gray-300 leading-relaxed uppercase font-mono space-y-1">
                     <p>{order.address}</p>
-                    {order.landmark && <p className="text-[11px] text-gray-500 lowercase italic">Near: {order.landmark}</p>}
-                    <p>{order.city}, {order.state} {order.country}</p>
                   </div>
                 </div>
                 <div>

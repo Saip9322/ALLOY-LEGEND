@@ -18,6 +18,7 @@ import { AppProvider } from './context/AppContext';
 import { Home } from './pages/Home';
 import { ProductList } from './pages/ProductList';
 import { ProductDetail } from './pages/ProductDetail';
+import { PreOrders } from './pages/PreOrders';
 import { Cart } from './pages/Cart';
 import { Checkout } from './pages/Checkout';
 import { OrderConfirmation } from './pages/OrderConfirmation';
@@ -30,11 +31,12 @@ import { AdminLogin } from './pages/admin/AdminLogin';
 import { AdminLayout } from './components/admin/AdminLayout';
 import { AdminDashboard } from './pages/admin/AdminDashboard';
 import { AdminOrders } from './pages/admin/AdminOrders';
+import { AdminPreOrders } from './pages/admin/AdminPreOrders';
 import { AdminSettings } from './pages/admin/AdminSettings';
 import { ComingSoon } from './pages/ComingSoon';
 
 // Set to true to hide all site content and show the Coming Soon page
-const IS_COMING_SOON = true;
+const IS_COMING_SOON = false;
 
 export default function App() {
   if (IS_COMING_SOON) {
@@ -62,6 +64,7 @@ export default function App() {
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/products" element={<ProductList />} />
+                  <Route path="/pre-orders" element={<PreOrders />} />
                   <Route path="/product/:id" element={<ProductDetail />} />
                   <Route path="/cart" element={<Cart />} />
                   <Route path="/checkout" element={<Checkout />} />
@@ -77,6 +80,7 @@ export default function App() {
                   <Route element={<AdminLayout />}>
                     <Route path="/admin" element={<AdminDashboard />} />
                     <Route path="/admin/orders" element={<AdminOrders />} />
+                    <Route path="/admin/preorders" element={<AdminPreOrders />} />
                     <Route path="/admin/settings" element={<AdminSettings />} />
                   </Route>
                 </Routes>

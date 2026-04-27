@@ -46,7 +46,8 @@ export const Checkout: React.FC = () => {
     return null;
   }
 
-  const shipping = 150; // Flat shipping in INR
+  const hasPreOrder = items.some(item => item.isPreOrder);
+  const shipping = hasPreOrder ? 0 : 150; // Free if pre-order, otherwise Flat shipping in INR
   const tax = 0; 
   const finalTotal = totalPrice + shipping;
 
@@ -102,13 +103,9 @@ export const Checkout: React.FC = () => {
         phone: formData.phone,
         email: formData.email,
         city: formData.city,
-        state: formData.state,
-        zip_code: formData.zipCode,
-        country: formData.country,
-        landmark: formData.landmark,
-        address: formData.address,
+        address: `${formData.address}${formData.landmark ? `, Near: ${formData.landmark}` : ''}, ${formData.city}, ${formData.state} - ${formData.zipCode}, ${formData.country}`,
         product_name: item.name,
-        product_variant: item.brand,
+        product_variant: item.isPreOrder ? `PreOrder - ${item.brand}` : item.brand,
         quantity: item.quantity,
         status: "pending"
       }));
@@ -460,6 +457,11 @@ export const Checkout: React.FC = () => {
                         className="w-16 h-16 object-contain rounded-lg bg-midnight border border-slate-border" 
                         referrerPolicy="no-referrer"
                       />
+                      {item.isPreOrder && (
+                        <div className="absolute -top-1 -left-1 bg-racing-red text-white text-[7px] font-black px-1.5 py-0.5 rounded-full uppercase tracking-tighter shadow-lg z-10">
+                          Pre-Order
+                        </div>
+                      )}
                       <span className="absolute -top-2 -right-2 bg-racing-red text-white text-[9px] font-black rounded-full h-5 w-5 flex items-center justify-center shadow-lg">
                         {item.quantity}
                       </span>
@@ -479,7 +481,13 @@ export const Checkout: React.FC = () => {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-500 font-bold uppercase tracking-[1px]">Shipping</span>
-                  <span className="text-white font-sans tabular-nums tracking-tight">₹{shipping.toLocaleString('en-IN')}</span>
+                  <span className="text-white font-sans tabular-nums tracking-tight">
+                    {hasPreOrder ? (
+                      <span className="text-racing-red font-black text-[12px] uppercase">* Calculated at Arrival</span>
+                    ) : (
+                      `₹${shipping.toLocaleString('en-IN')}`
+                    )}
+                  </span>
                 </div>
                 <div className="border-t border-slate-border pt-6 flex flex-col items-end gap-2">
                   <span className="text-white font-black uppercase tracking-[1px]">Total</span>

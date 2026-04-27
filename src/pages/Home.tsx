@@ -246,6 +246,48 @@ export const Home: React.FC = () => {
         </div>
       </motion.div>
 
+      {/* Pre-Order CTA Banner */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20"
+      >
+        <div className="relative overflow-hidden rounded-[32px] bg-slate-dark border border-slate-border group">
+          <div className="absolute inset-0 carbon-pattern opacity-10"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-racing-red/20 to-transparent"></div>
+          
+          <div className="relative z-10 flex flex-col md:flex-row items-center justify-between p-12 md:p-16 gap-10">
+            <div className="flex-1 text-center md:text-left">
+              <span className="inline-block px-4 py-1 bg-racing-red text-white text-[10px] font-black uppercase tracking-[3px] rounded-full mb-6 shadow-lg shadow-racing-red/20">Active Collection</span>
+              <h2 className="text-[36px] md:text-[54px] font-black uppercase leading-none mb-6 text-white tracking-tighter">
+                Secure Your <span className="text-racing-red">Pre-Orders</span>
+              </h2>
+              <p className="text-gray-400 text-[16px] max-w-xl mb-10 font-medium leading-relaxed">
+                Be the first to own exclusive limited-edition releases. 
+                <span className="block mt-2 font-bold text-gray-300 text-[13px]">* Shipping charges will be calculated when the product arrives.</span>
+              </p>
+              <Link 
+                to="/pre-orders"
+                className="inline-flex items-center gap-3 bg-white text-midnight px-10 py-4 font-black rounded-full text-[13px] uppercase tracking-[2px] transition-all hover:scale-105 hover:bg-racing-red hover:text-white group"
+              >
+                Browse Pre-Orders <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+            <div className="flex-1 flex justify-center">
+              <div className="relative w-full max-w-[400px]">
+                <div className="absolute inset-0 bg-racing-red/20 blur-[60px] rounded-full"></div>
+                <img 
+                  src="https://images.unsplash.com/photo-1581235720704-06d3acfcb36f?q=80&w=800&auto=format&fit=crop" 
+                  alt="Pre Order Preview" 
+                  className="relative w-full h-auto object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.5)] transform -rotate-12 group-hover:rotate-0 transition-transform duration-700"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
       {/* Brand Showcase */}
       <div className="bg-slate-dark/30 py-20 border-y border-slate-border overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

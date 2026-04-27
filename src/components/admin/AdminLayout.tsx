@@ -35,6 +35,7 @@ export const AdminLayout: React.FC = () => {
         <nav className="flex-1 px-4 space-y-1">
           <NavLink to="/admin" exact active={location.pathname === '/admin'} icon={<LayoutDashboard className="w-4 h-4" />} label="Overview" />
           <NavLink to="/admin/orders" active={location.pathname === '/admin/orders'} icon={<ShoppingBag className="w-4 h-4" />} label="Orders" />
+          <NavLink to="/admin/preorders" active={location.pathname === '/admin/preorders'} icon={<ShoppingBag className="w-4 h-4" />} label="Pre-Orders" />
           <NavLink to="/admin/settings" active={location.pathname === '/admin/settings'} icon={<Settings className="w-4 h-4" />} label="Settings" />
         </nav>
 
@@ -55,6 +56,7 @@ export const AdminLayout: React.FC = () => {
         <header className="h-16 bg-white/80 backdrop-blur-md border-bottom border-[#e5e5e7] px-8 flex items-center justify-between sticky top-0 z-10 shrink-0">
           <h2 className="text-sm font-semibold text-gray-900">
             {location.pathname === '/admin' ? 'Dashboard Overview' : 
+             location.pathname.includes('/preorders') ? 'Pre-Order Management' :
              location.pathname.includes('/orders') ? 'Order Management' : 'System Settings'}
           </h2>
           <div className="flex items-center gap-4">

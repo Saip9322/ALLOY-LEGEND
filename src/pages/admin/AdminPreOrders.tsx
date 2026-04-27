@@ -4,22 +4,15 @@ import {
   ShoppingBag, 
   Search, 
   Filter, 
-  ChevronDown, 
-  MoreVertical,
-  ArrowUpDown,
-  Phone,
-  Mail,
-  MapPin,
   Calendar,
   CheckCircle2,
   Clock,
   Package,
-  Truck
+  Truck,
+  Download
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useProducts } from '../../context/ProductContext';
-import { useAppContext } from '../../context/AppContext';
-import { useNavigate, Link } from 'react-router-dom';
 import { getSupabase } from '../../lib/supabase';
 import { Loader2 } from 'lucide-react';
 
@@ -40,7 +33,7 @@ interface Order {
   created_at: string;
 }
 
-export const AdminOrders: React.FC = () => {
+export const AdminPreOrders: React.FC = () => {
   const { user } = useAuth();
   const { products } = useProducts();
   const [orders, setOrders] = useState<Order[]>([]);
@@ -58,14 +51,16 @@ export const AdminOrders: React.FC = () => {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      // Filter out PreOrders
-      const standardOrders = (data || []).filter((o: Order) => {
+      
+      // Filter the orders to only include PreOrders.
+      // We check if the product in the orders matches a product with isPreOrder = true in our context
+      // OR if the product_variant was explicitly "PreOrder"
+      const preOrdersInfo = (data || []).filter((o: Order) => {
         const prod = products.find(p => p.name === o.product_name);
-        const isPreOrder = (prod && prod.isPreOrder) || (o.product_variant && o.product_variant.includes('PreOrder'));
-        return !isPreOrder;
+        return (prod && prod.isPreOrder) || (o.product_variant && o.product_variant.includes('PreOrder'));
       });
 
-      setOrders(standardOrders);
+      setOrders(preOrdersInfo);
     } catch (err) {
       console.error('Error fetching orders:', err);
     } finally {
@@ -96,6 +91,20 @@ export const AdminOrders: React.FC = () => {
     }
   };
 
+  const downloadExcel = (order: Order) => {
+    const csvContent = "data:text/csv;charset=utf-8," 
+      + "Order ID,Customer,Email,Phone,Address,Product,Quantity,Status,Date\n"
+      + `${order.id},"${order.customer_name}","${order.email}","${order.phone}","${order.address}","${order.product_name}","${order.quantity}","${order.status}","${new Date(order.created_at).toLocaleString()}"`;
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `PreOrder_${order.id.slice(0, 8)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   const filteredOrders = orders.filter(order => {
     const matchesSearch = 
       order.customer_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -119,15 +128,15 @@ export const AdminOrders: React.FC = () => {
     <div className="p-8 max-w-7xl mx-auto">
       <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-10">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-gray-900">Order Management</h1>
-          <p className="text-gray-500 text-sm mt-1">Review, process, and track customer shipments.</p>
+          <h1 className="text-3xl font-bold tracking-tight text-gray-900">Pre-Order Management</h1>
+          <p className="text-gray-500 text-sm mt-1">Review, process, and track customer pre-orders.</p>
         </div>
         <div className="flex items-center gap-3">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
             <input 
               type="text" 
-              placeholder="Search orders..."
+              placeholder="Search pre-orders..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="pl-10 pr-4 py-2 bg-white border border-[#e5e5e7] rounded-xl text-sm focus:outline-none focus:border-blue-600 w-64 shadow-sm transition-all"
@@ -170,7 +179,15 @@ export const AdminOrders: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-4">
+                     <button
+                        onClick={() => downloadExcel(order)}
+                        className="flex items-center gap-2 px-3 py-1.5 bg-green-50 text-green-700 hover:bg-green-100 border border-green-200 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors"
+                        title="Export to Excel/CSV"
+                     >
+                       <Download className="w-4 h-4" />
+                       Export
+                     </button>
                      <StatusAction 
                         currentStatus={order.status} 
                         onUpdate={(s) => updateOrderStatus(order.id, s)}
@@ -179,8 +196,7 @@ export const AdminOrders: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                  {/* Items */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 border-t border-[#e5e5e7] pt-6 mt-4">
                   <div className="space-y-3">
                     <h4 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Product Selection</h4>
                     <div className="flex items-start gap-3">
@@ -194,33 +210,21 @@ export const AdminOrders: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Contact */}
                   <div className="space-y-3">
                     <h4 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Contact Info</h4>
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-2 text-gray-600">
-                        <Mail className="w-3 h-3" />
-                        <span className="text-xs">{order.email}</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-gray-600">
-                        <Phone className="w-3 h-3" />
-                        <span className="text-xs">{order.phone}</span>
-                      </div>
+                    <div className="space-y-1 text-xs text-gray-600">
+                      <div><span className="font-semibold">Email:</span> {order.email}</div>
+                      <div><span className="font-semibold">Phone:</span> {order.phone}</div>
                     </div>
                   </div>
 
-                  {/* Shipping */}
                   <div className="space-y-3">
                     <h4 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Destination</h4>
-                    <div className="flex items-start gap-2 text-gray-600">
-                      <MapPin className="w-3 h-3 mt-0.5 shrink-0" />
-                      <div className="flex flex-col gap-1 text-xs">
-                        <span>{order.address}</span>
-                      </div>
+                    <div className="text-xs text-gray-600 space-y-1">
+                      <div>{order.address}</div>
                     </div>
                   </div>
 
-                  {/* Timeline */}
                   <div className="space-y-3">
                     <h4 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Timeline</h4>
                     <div className="flex items-center gap-2 text-gray-600">
@@ -239,8 +243,8 @@ export const AdminOrders: React.FC = () => {
             <div className="bg-gray-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
               <Search className="w-8 h-8 text-gray-300" />
             </div>
-            <h3 className="text-lg font-bold text-gray-900">No orders found</h3>
-            <p className="text-gray-500 text-sm">Try adjusting your filters or search term.</p>
+            <h3 className="text-lg font-bold text-gray-900">No pre-orders found</h3>
+            <p className="text-gray-500 text-sm">There are no pre-orders matching your criteria.</p>
           </div>
         )}
       </div>
@@ -255,8 +259,6 @@ const StatusAction: React.FC<{ currentStatus: string; onUpdate: (s: string) => v
     { id: 'shipped', label: 'Shipped', icon: <Truck className="w-3 h-3" /> },
     { id: 'delivered', label: 'Delivered', icon: <CheckCircle2 className="w-3 h-3" /> },
   ];
-
-  const current = statuses.find(s => s.id === currentStatus) || statuses[0];
 
   return (
     <div className="flex items-center gap-1 p-1 bg-gray-50 rounded-xl border border-[#e5e5e7]">

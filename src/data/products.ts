@@ -12,6 +12,7 @@ export interface Product {
   trending?: boolean;
   newArrival?: boolean;
   hidden?: boolean;
+  isPreOrder?: boolean;
 }
 
 const rawProducts: Omit<Product, 'id'>[] = [
@@ -204,6 +205,20 @@ const rawProducts: Omit<Product, 'id'>[] = [
     ],
     description: 'Detailed Mega Gear Roxy Hauler, a perfect addition for transport dioramas and collections.',
     stock: 1,
+    newArrival: true,
+  },
+  {
+    name: 'Special Edition Prototype Model',
+    brand: 'PreOrder',
+    scale: '1:64',
+    price: 99,
+    image: 'https://images.unsplash.com/photo-1581235720704-06d3acfcb36f?q=80&w=800&auto=format&fit=crop',
+    images: [
+      'https://images.unsplash.com/photo-1581235720704-06d3acfcb36f?q=80&w=800&auto=format&fit=crop'
+    ],
+    description: 'Limited edition pre-order prototype model. Coming soon!',
+    stock: 50,
+    isPreOrder: true,
     newArrival: true,
   }
 ];

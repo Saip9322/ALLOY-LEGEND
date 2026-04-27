@@ -131,8 +131,6 @@ export const Orders: React.FC = () => {
                         <h4 className="text-[10px] text-gray-500 font-bold uppercase tracking-[1px] mb-2">Shipping Address</h4>
                         <div className="text-[12px] text-gray-300 leading-tight space-y-0.5">
                           <p>{order.address}</p>
-                          {order.landmark && <p className="text-[10px] text-gray-500 italic">Landmark: {order.landmark}</p>}
-                          <p>{order.city}, {order.state} {order.country}</p>
                         </div>
                       </div>
                       <div>
