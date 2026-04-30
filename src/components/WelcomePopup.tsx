@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, ArrowRight } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
 
 export const WelcomePopup: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const location = useLocation();
   const WHATSAPP_LINK = 'https://chat.whatsapp.com/CH3BsklC2qP0b6RfbxG7gW';
 
   useEffect(() => {
+    // Don't show popup on balance checkout page
+    if (location.pathname.startsWith('/checkout/balance')) {
+      return;
+    }
+
     const hasSeenPopup = sessionStorage.getItem('welcome-popup-seen');
     if (!hasSeenPopup) {
       const timer = setTimeout(() => {
@@ -14,7 +21,7 @@ export const WelcomePopup: React.FC = () => {
       }, 3000); // Show after 3 seconds
       return () => clearTimeout(timer);
     }
-  }, []);
+  }, [location.pathname]);
 
   const handleClose = () => {
     setIsVisible(false);
