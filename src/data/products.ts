@@ -4,6 +4,7 @@ export interface Product {
   brand: string;
   scale: string;
   price: number;
+  fullPrice?: number;
   image: string;
   images: string[];
   description: string;
@@ -212,6 +213,7 @@ const rawProducts: Omit<Product, 'id'>[] = [
     brand: 'PreOrder',
     scale: '1:64',
     price: 99,
+    fullPrice: 1999,
     image: 'https://images.unsplash.com/photo-1581235720704-06d3acfcb36f?q=80&w=800&auto=format&fit=crop',
     images: [
       'https://images.unsplash.com/photo-1581235720704-06d3acfcb36f?q=80&w=800&auto=format&fit=crop'

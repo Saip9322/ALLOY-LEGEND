@@ -179,7 +179,24 @@ export const AdminPreOrders: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-4">
+                     <div className="flex items-center gap-4">
+                     <button
+                        onClick={() => {
+                          const link = `${window.location.origin}/checkout/balance/${order.id}`;
+                          const subject = encodeURIComponent(`Your Pre-Ordered Model Has Arrived!`);
+                          const body = encodeURIComponent(`Hi ${order.customer_name},\n\nGreat news! Your pre-ordered model "${order.product_name}" has finally arrived.\n\nPlease complete your order by paying the remaining balance amount using the secure link below:\n\n${link}\n\nOnce the payment is completed, we will dispatch your model within 48hrs.\n\nThank you for your patience and support!\nAlloy Legends Team`);
+                          
+                          // Open mail client
+                          window.location.href = `mailto:${order.email}?subject=${subject}&body=${body}`;
+                          alert(`Email template generated!\n\nPlease ensure you send this email from admin@alloylegends.com.\n\nIf your email client didn't open automatically, you can manually send an email to ${order.email} with the link:\n\n${link}`);
+                        }}
+                        className="flex items-center gap-2 px-3 py-1.5 bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors"
+                        title="Send Balance Payment Link"
+                     >
+                       <ShoppingBag className="w-4 h-4" />
+                       Collect Balance
+                     </button>
+
                      <button
                         onClick={() => downloadExcel(order)}
                         className="flex items-center gap-2 px-3 py-1.5 bg-green-50 text-green-700 hover:bg-green-100 border border-green-200 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors"

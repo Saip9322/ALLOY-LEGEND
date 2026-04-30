@@ -34,9 +34,10 @@ import { AdminOrders } from './pages/admin/AdminOrders';
 import { AdminPreOrders } from './pages/admin/AdminPreOrders';
 import { AdminSettings } from './pages/admin/AdminSettings';
 import { ComingSoon } from './pages/ComingSoon';
+import { BalanceCheckout } from './pages/BalanceCheckout';
 
 // Set to true to hide all site content and show the Coming Soon page
-const IS_COMING_SOON = true;
+const IS_COMING_SOON = false;
 
 export default function App() {
   if (IS_COMING_SOON) {
@@ -74,6 +75,7 @@ export default function App() {
                   <Route path="/profile" element={<Profile />} />
                   <Route path="/track-order" element={<TrackOrder />} />
                   <Route path="/order-confirmation" element={<OrderConfirmation />} />
+                  <Route path="/checkout/balance/:orderId" element={<BalanceCheckout />} />
                   
                   {/* Admin Routes */}
                   <Route path="/admin/login" element={<AdminLogin />} />
