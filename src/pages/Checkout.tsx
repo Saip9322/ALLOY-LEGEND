@@ -24,10 +24,6 @@ export const Checkout: React.FC = () => {
     state: user?.user_metadata?.state || '',
     zipCode: user?.user_metadata?.zip || '',
     country: 'India',
-    cardNumber: '',
-    expiryDate: '',
-    cvv: '',
-    nameOnCard: '',
     notes: ''
   });
 
@@ -35,6 +31,19 @@ export const Checkout: React.FC = () => {
   const [banner, setBanner] = useState<{ type: 'success' | 'error', message: string } | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [razorpayLoaded, setRazorpayLoaded] = useState(false);
+
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.async = true;
+    script.onload = () => setRazorpayLoaded(true);
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
   useEffect(() => {
     if (items.length === 0 && !isSubmitted) {
@@ -75,10 +84,6 @@ export const Checkout: React.FC = () => {
     if (!formData.city) newErrors.city = 'City is required';
     if (!formData.state) newErrors.state = 'State is required';
     if (!formData.zipCode) newErrors.zipCode = 'ZIP code is required';
-    if (!formData.nameOnCard) newErrors.nameOnCard = 'Name on card is required';
-    if (!formData.cardNumber) newErrors.cardNumber = 'Card number is required';
-    if (!formData.expiryDate) newErrors.expiryDate = 'Expiry date is required';
-    if (!formData.cvv) newErrors.cvv = 'CVV is required';
     
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -93,8 +98,48 @@ export const Checkout: React.FC = () => {
       return;
     }
 
+    if (!razorpayLoaded) {
+      setBanner({ type: 'error', message: 'Payment system is still loading. Please try again in a moment.' });
+      return;
+    }
+
     setIsProcessing(true);
+
+    const amountInPaise = finalTotal * 100;
+
+    const options = {
+      key: 'rzp_live_SlhrHu2XTdkB2X',
+      amount: amountInPaise,
+      currency: 'INR',
+      name: 'Alloy Legends',
+      description: 'Order Payment',
+      image: 'https://images.unsplash.com/photo-1581235720704-06d3acfcb36f?q=80&w=200&auto=format&fit=crop',
+      handler: async function (response: any) {
+        // Payment successful
+        await processOrder(response.razorpay_payment_id);
+      },
+      prefill: {
+        name: `${formData.firstName} ${formData.lastName}`,
+        email: formData.email,
+        contact: formData.phone
+      },
+      theme: {
+        color: '#ca0000'
+      }
+    };
+
+    const rzp = new (window as any).Razorpay(options);
     
+    rzp.on('payment.failed', function (response: any) {
+      console.error('Razorpay Error:', response.error);
+      setBanner({ type: 'error', message: response.error.description || 'Payment failed. Please try again.' });
+      setIsProcessing(false);
+    });
+
+    rzp.open();
+  };
+
+  const processOrder = async (paymentId: string) => {
     try {
       const supabase = getSupabase();
       
@@ -103,11 +148,11 @@ export const Checkout: React.FC = () => {
         phone: formData.phone,
         email: formData.email,
         city: formData.city,
-        address: `${formData.address}${formData.landmark ? `, Near: ${formData.landmark}` : ''}, ${formData.city}, ${formData.state} - ${formData.zipCode}, ${formData.country}`,
+        address: `${formData.address}${formData.landmark ? `, Near: ${formData.landmark}` : ''}, ${formData.city}, ${formData.state} - ${formData.zipCode}, ${formData.country} (Payment ID: ${paymentId})`,
         product_name: item.name,
         product_variant: item.isPreOrder ? `PreOrder - ${item.brand}` : item.brand,
         quantity: item.quantity,
-        status: "pending"
+        status: "processing"
       }));
 
       const { error } = await supabase
@@ -123,7 +168,7 @@ export const Checkout: React.FC = () => {
 
       setBanner({ type: 'success', message: 'Your order has been placed successfully!' });
       
-      // Simulate confirmation redirect
+      // Navigate to confirmation
       setTimeout(() => {
         const orderId = `ORD-${Math.floor(Math.random() * 1000000)}`;
         const orderState = { 
@@ -152,10 +197,10 @@ export const Checkout: React.FC = () => {
 
     } catch (err: any) {
       console.error('Supabase error:', err);
-      let message = 'An error occurred while processing your order. Please try again.';
+      let message = 'An error occurred while processing your order. Please contact support with your payment ID: ' + paymentId;
       
       if (err?.code === '42501') {
-        message = 'Database Security Error: "orders" table is missing an INSERT policy. Please run the SQL command provided in the chat to fix this.';
+        message = 'Database Security Error: "orders" table is missing an INSERT policy.';
       }
 
       setBanner({ type: 'error', message });
@@ -374,66 +419,7 @@ export const Checkout: React.FC = () => {
                 </div>
               </div>
 
-              {/* Payment Information */}
-              <div className="bg-slate-dark border border-slate-border rounded-2xl p-8 shadow-xl">
-                <div className="flex items-center mb-8 border-b border-slate-border pb-4">
-                  <CreditCard className="h-5 w-5 text-racing-red mr-3" />
-                  <h2 className="text-[14px] font-black uppercase tracking-[2px] text-white">Payment Details</h2>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="md:col-span-2">
-                    <label className="block text-[10px] font-black text-gray-500 uppercase tracking-[2px] mb-2">Name on Card</label>
-                    <input 
-                      type="text" 
-                      name="nameOnCard"
-                      value={formData.nameOnCard}
-                      onChange={handleInputChange}
-                      className={`w-full bg-midnight border rounded-lg px-5 py-3 focus:outline-none text-[14px] text-white placeholder:text-gray-700 transition-colors ${errors.nameOnCard ? 'border-racing-red' : 'border-slate-border focus:border-racing-red'}`}
-                    />
-                    {errors.nameOnCard && <span className="text-[10px] text-racing-red mt-1 block font-bold uppercase tracking-[1px]">{errors.nameOnCard}</span>}
-                  </div>
-                  <div className="md:col-span-2">
-                    <label className="block text-[10px] font-black text-gray-500 uppercase tracking-[2px] mb-2">Card Number</label>
-                    <input 
-                      type="text" 
-                      name="cardNumber"
-                      placeholder="0000 0000 0000 0000"
-                      value={formData.cardNumber}
-                      onChange={handleInputChange}
-                      className={`w-full bg-midnight border rounded-lg px-5 py-3 focus:outline-none font-mono text-[14px] text-white placeholder:text-gray-700 transition-colors ${errors.cardNumber ? 'border-racing-red' : 'border-slate-border focus:border-racing-red'}`}
-                    />
-                    {errors.cardNumber && <span className="text-[10px] text-racing-red mt-1 block font-bold uppercase tracking-[1px]">{errors.cardNumber}</span>}
-                  </div>
-                  <div>
-                    <label className="block text-[10px] font-black text-gray-500 uppercase tracking-[2px] mb-2">Expiry Date</label>
-                    <input 
-                      type="text" 
-                      name="expiryDate"
-                      placeholder="MM/YY"
-                      value={formData.expiryDate}
-                      onChange={handleInputChange}
-                      className={`w-full bg-midnight border rounded-lg px-5 py-3 focus:outline-none font-mono text-[14px] text-white placeholder:text-gray-700 transition-colors ${errors.expiryDate ? 'border-racing-red' : 'border-slate-border focus:border-racing-red'}`}
-                    />
-                    {errors.expiryDate && <span className="text-[10px] text-racing-red mt-1 block font-bold uppercase tracking-[1px]">{errors.expiryDate}</span>}
-                  </div>
-                  <div>
-                    <label className="block text-[10px] font-black text-gray-500 uppercase tracking-[2px] mb-2">CVV</label>
-                    <input 
-                      type="text" 
-                      name="cvv"
-                      placeholder="123"
-                      value={formData.cvv}
-                      onChange={handleInputChange}
-                      className={`w-full bg-midnight border rounded-lg px-5 py-3 focus:outline-none font-mono text-[14px] text-white placeholder:text-gray-700 transition-colors ${errors.cvv ? 'border-racing-red' : 'border-slate-border focus:border-racing-red'}`}
-                    />
-                    {errors.cvv && <span className="text-[10px] text-racing-red mt-1 block font-bold uppercase tracking-[1px]">{errors.cvv}</span>}
-                  </div>
-                </div>
-                <div className="mt-8 flex items-center text-[11px] font-bold text-gray-500 uppercase tracking-[1px]">
-                  <ShieldCheck className="h-4 w-4 mr-2 text-green-500" />
-                  Payments are secure and encrypted.
-                </div>
-              </div>
+              {/* Remove manual credit card fields, now using Razorpay */}
             </form>
           </motion.div>
 

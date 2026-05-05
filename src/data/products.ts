@@ -209,6 +209,19 @@ const rawProducts: Omit<Product, 'id'>[] = [
     newArrival: true,
   },
   {
+    name: 'Mega Gear Roxy Hauler-Unsealed',
+    brand: 'PreOrder',
+    scale: '1:64',
+    price: 1,
+    image: 'https://diecastchennai396.in/cdn/shop/files/8633.png?v=1776433910&width=1346',
+    images: [
+      'https://diecastchennai396.in/cdn/shop/files/8633.png?v=1776433910&width=1346'
+    ],
+    description: 'Detailed Mega Gear Roxy Hauler, a perfect addition for transport dioramas and collections.',
+    stock: 1,
+    newArrival: true,
+  },
+  {
     name: 'Special Edition Prototype Model',
     brand: 'PreOrder',
     scale: '1:64',

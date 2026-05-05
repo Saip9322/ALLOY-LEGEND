@@ -14,6 +14,19 @@ export const BalanceCheckout: React.FC = () => {
   const [processing, setProcessing] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [razorpayLoaded, setRazorpayLoaded] = useState(false);
+
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.async = true;
+    script.onload = () => setRazorpayLoaded(true);
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
   // We are mocking finding the original product to determine full price.
   const [originalProduct, setOriginalProduct] = useState<any>(null);
@@ -47,8 +60,49 @@ export const BalanceCheckout: React.FC = () => {
 
   const handlePayment = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!razorpayLoaded) {
+      setError('Payment system is still loading. Please try again in a moment.');
+      return;
+    }
+
     setProcessing(true);
     
+    const amountInPaise = (remainingBalance > 0 ? remainingBalance : 1500) * 100;
+
+    const options = {
+      key: 'rzp_live_SlhrHu2XTdkB2X',
+      amount: amountInPaise,
+      currency: 'INR',
+      name: 'Alloy Legends',
+      description: 'Balance Payment',
+      image: 'https://images.unsplash.com/photo-1581235720704-06d3acfcb36f?q=80&w=200&auto=format&fit=crop',
+      handler: async function (response: any) {
+        // Payment successful
+        await processBalancePayment(response.razorpay_payment_id);
+      },
+      prefill: {
+        name: order.customer_name,
+        email: order.email,
+        contact: order.phone
+      },
+      theme: {
+        color: '#ca0000'
+      }
+    };
+
+    const rzp = new (window as any).Razorpay(options);
+    
+    rzp.on('payment.failed', function (response: any) {
+      console.error('Razorpay Error:', response.error);
+      setError(response.error.description || 'Payment failed. Please try again.');
+      setProcessing(false);
+    });
+
+    rzp.open();
+  };
+
+  const processBalancePayment = async (paymentId: string) => {
     try {
       const supabase = getSupabase();
       
@@ -57,7 +111,7 @@ export const BalanceCheckout: React.FC = () => {
         .from('orders')
         .update({ 
           status: 'processing', 
-          product_variant: (order.product_variant || '').replace('PreOrder', 'Balance Paid')
+          product_variant: (order.product_variant || '').replace('PreOrder', 'Balance Paid') + ` (Payment ID: ${paymentId})`
         })
         .eq('id', orderId);
 
@@ -66,7 +120,7 @@ export const BalanceCheckout: React.FC = () => {
       setSuccess(true);
     } catch (err: any) {
       console.error("Error updating order:", err);
-      setError("Failed to process payment. Please try again.");
+      setError("Failed to process payment. Please contact support with payment ID: " + paymentId);
     } finally {
       setProcessing(false);
     }
@@ -151,44 +205,29 @@ export const BalanceCheckout: React.FC = () => {
           </div>
         </div>
 
-        {/* Payment Form */}
-        <div className="bg-white p-8 rounded-2xl border border-[#e5e5e7] shadow-sm">
-           <h3 className="font-bold text-gray-900 uppercase tracking-wider text-sm mb-6 flex items-center gap-2">
-             <CreditCard className="w-4 h-4 text-gray-400" /> Payment Details
+        {/* Payment Action */}
+        <div className="bg-white p-8 rounded-2xl border border-[#e5e5e7] shadow-sm flex flex-col justify-center text-center">
+           <h3 className="font-bold text-gray-900 uppercase tracking-wider text-sm mb-4">
+             Complete Payment
            </h3>
+           <p className="text-sm text-gray-500 mb-6">You will be redirected to the secure Razorpay payment gateway to complete your transaction.</p>
 
-           <form onSubmit={handlePayment} className="space-y-4">
-             <div>
-               <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Card Number</label>
-               <input type="text" placeholder="0000 0000 0000 0000" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-600 outline-none font-mono" required />
-             </div>
-             <div className="grid grid-cols-2 gap-4">
-               <div>
-                 <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Expiry Date</label>
-                 <input type="text" placeholder="MM/YY" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-600 outline-none font-mono" required />
-               </div>
-               <div>
-                 <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">CVV</label>
-                 <input type="text" placeholder="123" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-600 outline-none font-mono" required />
-               </div>
-             </div>
-             <div className="pt-4">
-               <button 
-                 type="submit" 
-                 disabled={processing}
-                 className="w-full py-4 bg-gray-900 text-white rounded-xl font-bold uppercase tracking-wider hover:bg-gray-800 transition shadow-lg shadow-gray-900/20 flex items-center justify-center gap-2 disabled:opacity-70"
-               >
-                 {processing ? (
-                   <>
-                     <Loader2 className="w-5 h-5 animate-spin" /> Processing...
-                   </>
-                 ) : (
-                   <>
-                     <Lock className="w-4 h-4" /> Pay Balance
-                   </>
-                 )}
-               </button>
-             </div>
+           <form onSubmit={handlePayment}>
+             <button 
+               type="submit" 
+               disabled={processing}
+               className="w-full py-4 bg-gray-900 text-white rounded-xl font-bold uppercase tracking-wider hover:bg-gray-800 transition shadow-lg shadow-gray-900/20 flex items-center justify-center gap-2 disabled:opacity-70"
+             >
+               {processing ? (
+                 <>
+                   <Loader2 className="w-5 h-5 animate-spin" /> Processing...
+                 </>
+               ) : (
+                 <>
+                   <Lock className="w-4 h-4" /> Pay via Razorpay
+                 </>
+               )}
+             </button>
            </form>
         </div>
       </div>

@@ -35,10 +35,9 @@ import { AdminPreOrders } from './pages/admin/AdminPreOrders';
 import { AdminSettings } from './pages/admin/AdminSettings';
 import { ComingSoon } from './pages/ComingSoon';
 import { BalanceCheckout } from './pages/BalanceCheckout';
-import { RazorpayTest } from './pages/RazorpayTest';
 
 // Set to true to hide all site content and show the Coming Soon page
-const IS_COMING_SOON = true;
+const IS_COMING_SOON = false;
 
 export default function App() {
   if (IS_COMING_SOON) {
@@ -77,7 +76,6 @@ export default function App() {
                   <Route path="/track-order" element={<TrackOrder />} />
                   <Route path="/order-confirmation" element={<OrderConfirmation />} />
                   <Route path="/checkout/balance/:orderId" element={<BalanceCheckout />} />
-                  <Route path="/razorpay-test" element={<RazorpayTest />} />
                   
                   {/* Admin Routes */}
                   <Route path="/admin/login" element={<AdminLogin />} />
