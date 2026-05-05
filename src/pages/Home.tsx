@@ -59,7 +59,7 @@ export const Home: React.FC = () => {
       className="min-h-screen bg-midnight text-gray-100"
     >
       {/* Hero Section - New Arrivals Slider */}
-      <div className="relative h-[650px] sm:h-[700px] lg:h-[750px] overflow-hidden border-b border-slate-border">
+      <div className="relative min-h-[650px] lg:h-[750px] overflow-hidden border-b border-slate-border py-20 lg:py-0">
         <AnimatePresence mode="wait">
           {newArrivals.map((product, index) => (
             index === currentSlide && (
@@ -69,39 +69,39 @@ export const Home: React.FC = () => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.6 }}
-                className="absolute inset-0 carbon-pattern"
+                className="absolute inset-0 carbon-pattern h-full w-full"
               >
                 {/* Background Pattern mask */}
                 <div className="absolute inset-0 z-0 bg-gradient-to-b from-midnight/20 via-midnight/50 to-midnight"></div>
                 
-                <div className="relative z-10 max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-center gap-10 lg:gap-20">
+                <div className="relative z-10 max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-center gap-10 lg:gap-20 pt-10 pb-20 lg:py-0 overflow-y-auto overflow-x-hidden no-scrollbar">
                   {/* Text Content */}
                   <motion.div
                     initial={{ x: -50, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ delay: 0.2, duration: 0.8 }}
-                    className="flex-1 text-center lg:text-left pt-20 lg:pt-0"
+                    className="flex-1 text-center lg:text-left mt-10 lg:mt-0 z-20"
                   >
                     <p className="text-racing-red font-bold uppercase text-[11px] mb-4 tracking-[4px] bg-racing-red/10 px-3 py-1 rounded inline-block">New Arrival</p>
-                    <h1 className="text-[36px] sm:text-[54px] lg:text-[68px] leading-[1.1] mb-6 font-black text-white uppercase tracking-tighter">
+                    <h1 className="text-[32px] sm:text-[48px] lg:text-[68px] leading-[1.1] mb-6 font-black text-white uppercase tracking-tighter">
                       {product.name.split(' ').map((word, i) => (
                         <span key={i} className={i % 2 === 0 ? "" : "text-racing-red"}>{word} </span>
                       ))}
                     </h1>
-                    <p className="text-gray-300 max-w-[500px] mx-auto lg:mx-0 text-[16px] sm:text-[18px] mb-10 leading-relaxed font-medium">
+                    <p className="text-gray-300 max-w-[500px] mx-auto lg:mx-0 text-[14px] sm:text-[18px] mb-8 lg:mb-10 leading-relaxed font-medium">
                       {product.description}
                     </p>
                     
-                    <div className="flex flex-wrap items-center justify-center lg:justify-start gap-6">
+                    <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 lg:gap-6">
                       <Link 
                         to={`/product/${product.id}`}
-                        className="racing-gradient text-white px-10 py-4 font-black rounded-full text-[13px] uppercase tracking-[2px] transition-all hover:scale-105 active:scale-95 shadow-xl shadow-racing-red/25"
+                        className="racing-gradient text-white px-8 lg:px-10 py-3 lg:py-4 font-black rounded-full text-[12px] lg:text-[13px] uppercase tracking-[2px] transition-all hover:scale-105 active:scale-95 shadow-xl shadow-racing-red/25"
                       >
                         Discover Model
                       </Link>
-                      <div className="flex flex-col justify-center border-l lg:border-white/10 pl-5">
+                      <div className="flex flex-col justify-center border-l border-white/10 pl-5">
                         <span className="text-gray-500 text-[10px] uppercase tracking-[2px] mb-1">Scale 1:64</span>
-                        <span className="text-white font-black text-[24px]">₹{product.price.toLocaleString()}</span>
+                        <span className="text-white font-black text-[20px] lg:text-[24px]">₹{product.price.toLocaleString()}</span>
                       </div>
                     </div>
                   </motion.div>
@@ -111,14 +111,14 @@ export const Home: React.FC = () => {
                     initial={{ scale: 0.8, opacity: 0, x: 50 }}
                     animate={{ scale: 1, opacity: 1, x: 0 }}
                     transition={{ duration: 1, ease: "easeOut" }}
-                    className="flex-1 flex justify-center items-center h-full max-w-[500px] lg:max-w-none"
+                    className="flex-1 flex justify-center items-center w-full max-w-[300px] sm:max-w-[400px] lg:max-w-none mt-8 lg:mt-0 z-10"
                   >
-                    <div className="relative group">
-                      <div className="absolute -inset-10 bg-racing-red/10 blur-[80px] rounded-full group-hover:bg-racing-red/20 transition-all duration-700"></div>
+                    <div className="relative group w-full">
+                      <div className="absolute -inset-4 sm:-inset-10 bg-racing-red/10 blur-[40px] sm:blur-[80px] rounded-full group-hover:bg-racing-red/20 transition-all duration-700"></div>
                       <img 
                         src={product.image} 
                         alt={product.name} 
-                        className="relative w-full h-auto object-contain drop-shadow-[0_25px_60px_rgba(0,0,0,0.8)] hover:scale-110 transition-transform duration-700 pointer-events-none"
+                        className="relative w-full h-auto object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.8)] lg:drop-shadow-[0_25px_60px_rgba(0,0,0,0.8)] hover:scale-110 transition-transform duration-700 pointer-events-none"
                       />
                     </div>
                   </motion.div>
@@ -129,7 +129,7 @@ export const Home: React.FC = () => {
         </AnimatePresence>
 
         {/* Slider Controls */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 lg:left-10 lg:translate-x-0 z-20 flex gap-3">
+        <div className="absolute bottom-6 lg:bottom-10 left-1/2 -translate-x-1/2 lg:left-10 lg:translate-x-0 z-30 flex gap-3">
           {newArrivals.map((_, index) => (
             <button
               key={index}
