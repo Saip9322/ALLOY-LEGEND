@@ -219,6 +219,7 @@ const rawProducts: Omit<Product, 'id'>[] = [
     ],
     description: 'Detailed Mega Gear Roxy Hauler, a perfect addition for transport dioramas and collections.',
     stock: 1,
+    isPreOrder: true,
     newArrival: true,
   },
   {
