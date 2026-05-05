@@ -38,7 +38,7 @@ import { BalanceCheckout } from './pages/BalanceCheckout';
 import { RazorpayTest } from './pages/RazorpayTest';
 
 // Set to true to hide all site content and show the Coming Soon page
-const IS_COMING_SOON = false;
+const IS_COMING_SOON = true;
 
 export default function App() {
   if (IS_COMING_SOON) {
