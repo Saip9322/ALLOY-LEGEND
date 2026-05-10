@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
 import { motion } from 'motion/react';
 import { FileText } from 'lucide-react';
-import { Navbar } from '../components/Navbar';
-import { Footer } from '../components/Footer';
 
 export const TermsOfService: React.FC = () => {
   useEffect(() => {
@@ -11,8 +9,6 @@ export const TermsOfService: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-black flex flex-col text-white">
-      <Navbar />
-      
       <main className="flex-grow pt-32 pb-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -69,8 +65,6 @@ export const TermsOfService: React.FC = () => {
           </motion.div>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 };
