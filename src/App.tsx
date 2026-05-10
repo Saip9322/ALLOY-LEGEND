@@ -39,7 +39,7 @@ import { PrivacyPolicy } from './pages/PrivacyPolicy';
 import { TermsOfService } from './pages/TermsOfService';
 
 // Set to true to hide all site content and show the Coming Soon page
-const IS_COMING_SOON = false;
+const IS_COMING_SOON = true;
 
 export default function App() {
   if (IS_COMING_SOON) {
