@@ -102,8 +102,8 @@ export const Footer: React.FC = () => {
         <div className="border-t border-slate-border/30 pt-10 flex flex-col md:flex-row justify-between items-center text-[10px] font-black uppercase tracking-[2px] text-gray-600">
           <p>&copy; {new Date().getFullYear()} {appName}. Precision Engineered.</p>
           <div className="flex space-x-8 mt-6 md:mt-0">
-            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+            <Link to="/privacypolicy" className="hover:text-white transition-colors">Privacy Policy</Link>
+            <Link to="/termsofservice" className="hover:text-white transition-colors">Terms of Service</Link>
           </div>
         </div>
       </div>

@@ -157,6 +157,10 @@ export const Signup: React.FC = () => {
             Google
           </button>
 
+          <p className="text-center text-xs text-gray-500 mt-4">
+            By signing up, you agree to our <Link to="/privacypolicy" className="text-gray-300 hover:text-white underline decoration-gray-600 underline-offset-2">Privacy Policy</Link> and <Link to="/termsofservice" className="text-gray-300 hover:text-white underline decoration-gray-600 underline-offset-2">Terms of Service</Link>.
+          </p>
+
           <div className="text-center pt-4">
             <Link
               to="/login"
