@@ -10,6 +10,7 @@ interface AuthContextType {
   signIn: (email: string, password: string) => Promise<{ data: any, error: any }>;
   signInWithOtp: (email: string) => Promise<{ data: any, error: any }>;
   verifyOtp: (email: string, token: string) => Promise<{ data: any, error: any }>;
+  signInWithGoogle: () => Promise<{ data: any, error: any }>;
   updateProfile: (data: { fullName?: string; address?: string; landmark?: string; city?: string; state?: string; zip?: string; country?: string; phone?: string }) => Promise<{ data: any, error: any }>;
 }
 
@@ -108,6 +109,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const signInWithGoogle = async () => {
+    try {
+      const supabase = getSupabase();
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: window.location.origin,
+        },
+      });
+      return { data, error };
+    } catch (e) {
+      return { data: null, error: e };
+    }
+  };
+
   const signOut = async () => {
     try {
       const supabase = getSupabase();
@@ -139,7 +155,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, signOut, signUp, signIn, signInWithOtp, verifyOtp, updateProfile }}>
+    <AuthContext.Provider value={{ user, loading, signOut, signUp, signIn, signInWithOtp, verifyOtp, signInWithGoogle, updateProfile }}>
       {children}
     </AuthContext.Provider>
   );
