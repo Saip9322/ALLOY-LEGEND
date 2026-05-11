@@ -58,14 +58,7 @@ export const AdminOrders: React.FC = () => {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      // Filter out PreOrders
-      const standardOrders = (data || []).filter((o: Order) => {
-        const prod = products.find(p => p.name === o.product_name);
-        const isPreOrder = (prod && prod.isPreOrder) || (o.product_variant && o.product_variant.includes('PreOrder'));
-        return !isPreOrder;
-      });
-
-      setOrders(standardOrders);
+      setOrders(data || []);
     } catch (err) {
       console.error('Error fetching orders:', err);
     } finally {

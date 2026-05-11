@@ -8,8 +8,7 @@ export const Cart: React.FC = () => {
   const { items, updateQuantity, removeFromCart, totalPrice } = useCart();
   const navigate = useNavigate();
 
-  const hasPreOrder = items.some(item => item.isPreOrder);
-  const shippingFee = hasPreOrder ? 0 : 150;
+  const shippingFee = 150;
 
   if (items.length === 0) {
     return (
@@ -80,11 +79,6 @@ export const Cart: React.FC = () => {
                             className="w-24 h-24 object-contain rounded-xl bg-midnight border border-slate-border"
                             referrerPolicy="no-referrer"
                           />
-                          {item.isPreOrder && (
-                            <div className="absolute -top-2 -left-2 bg-racing-red text-white text-[8px] font-black px-2 py-0.5 rounded-full uppercase tracking-tighter shadow-lg z-10">
-                              Pre-Order
-                            </div>
-                          )}
                         </div>
                         <div className="flex-1">
                           <Link to={`/product/${item.id}`} className="font-bold text-[15px] text-white hover:text-racing-red transition-colors line-clamp-2">
@@ -184,11 +178,7 @@ export const Cart: React.FC = () => {
                 <div className="flex justify-between">
                   <span className="text-gray-500 font-bold uppercase tracking-[1px]">Shipping</span>
                   <span className="font-sans tabular-nums tracking-tight text-white">
-                    {hasPreOrder ? (
-                      <span className="text-racing-red font-black text-[12px] uppercase">* Calculated at Arrival</span>
-                    ) : (
-                      `₹${shippingFee.toLocaleString('en-IN')}`
-                    )}
+                    ₹{shippingFee.toLocaleString('en-IN')}
                   </span>
                 </div>
                 <div className="border-t border-slate-border pt-6 flex flex-col items-end gap-2">

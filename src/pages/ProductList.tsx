@@ -41,7 +41,7 @@ export const ProductList: React.FC = () => {
     );
   }
 
-  const brands = Array.from(new Set([...allProducts.map(p => p.brand), 'PreOrder', 'Miscellaneous']));
+  const brands = Array.from(new Set([...allProducts.map(p => p.brand), 'Miscellaneous']));
   const scales = Array.from(new Set(allProducts.map(p => p.scale)));
 
   const filteredProducts = allProducts.filter(product => {
@@ -55,9 +55,8 @@ export const ProductList: React.FC = () => {
       : true;
     
     let matchesAvailability = true;
-    if (selectedAvailability === 'in-stock') matchesAvailability = product.stock > 0 && product.brand !== 'PreOrder';
-    if (selectedAvailability === 'out-of-stock') matchesAvailability = product.stock === 0 && product.brand !== 'PreOrder';
-    if (selectedAvailability === 'pre-order') matchesAvailability = product.brand === 'PreOrder';
+    if (selectedAvailability === 'in-stock') matchesAvailability = product.stock > 0;
+    if (selectedAvailability === 'out-of-stock') matchesAvailability = product.stock === 0;
 
     return matchesBrand && matchesScale && matchesSearch && matchesAvailability;
   }).sort((a, b) => {
@@ -186,22 +185,6 @@ export const ProductList: React.FC = () => {
                         className="w-4 h-4 text-racing-red bg-midnight border-slate-border focus:ring-racing-red focus:ring-offset-midnight transition-all"
                       />
                       <span className="ml-4 text-[13px] font-medium text-gray-400 group-hover:text-white transition-colors">Out of Stock</span>
-                    </div>
-                  </label>
-                  <label className="flex items-center justify-between cursor-pointer group">
-                    <div className="flex items-center">
-                      <input 
-                        type="radio" 
-                        name="availability" 
-                        checked={selectedAvailability === 'pre-order'}
-                        onChange={() => {
-                          setSelectedAvailability('pre-order');
-                          // If user specifically wants "Pre Orders tab", we can also clear brand or filter by brand
-                          setSelectedBrand('PreOrder');
-                        }}
-                        className="w-4 h-4 text-racing-red bg-midnight border-slate-border focus:ring-racing-red focus:ring-offset-midnight transition-all"
-                      />
-                      <span className="ml-4 text-[13px] font-medium text-gray-400 group-hover:text-white transition-colors">Pre Orders</span>
                     </div>
                   </label>
                 </div>

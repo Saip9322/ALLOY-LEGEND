@@ -66,7 +66,6 @@ export const Navbar: React.FC = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-6">
             <Link to="/products" className="text-[11px] font-bold uppercase tracking-[2px] text-gray-400 hover:text-racing-red transition-colors">Store</Link>
-            <Link to="/pre-orders" className="text-[11px] font-bold uppercase tracking-[2px] text-gray-400 hover:text-racing-red transition-colors">Pre-Orders</Link>
             <Link to="/track-order" className="text-[11px] font-bold uppercase tracking-[2px] text-gray-400 hover:text-racing-red transition-colors">Track Order</Link>
             
             <form onSubmit={handleSearch} className="relative">
@@ -155,7 +154,6 @@ export const Navbar: React.FC = () => {
               </button>
             </form>
             <Link to="/products" onClick={() => setIsMenuOpen(false)} className="block px-3 py-2 text-[12px] font-bold uppercase tracking-[1px] text-gray-400 hover:text-racing-red">Store</Link>
-            <Link to="/pre-orders" onClick={() => setIsMenuOpen(false)} className="block px-3 py-2 text-[12px] font-bold uppercase tracking-[1px] text-gray-400 hover:text-racing-red">Pre-Orders</Link>
             <Link to="/track-order" onClick={() => setIsMenuOpen(false)} className="block px-3 py-2 text-[12px] font-bold uppercase tracking-[1px] text-gray-400 hover:text-racing-red">Track Order</Link>
             
             {user ? (

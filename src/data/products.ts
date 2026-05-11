@@ -13,7 +13,6 @@ export interface Product {
   trending?: boolean;
   newArrival?: boolean;
   hidden?: boolean;
-  isPreOrder?: boolean;
 }
 
 const rawProducts: Omit<Product, 'id'>[] = [
@@ -207,35 +206,6 @@ const rawProducts: Omit<Product, 'id'>[] = [
     description: 'Detailed Mega Gear Roxy Hauler, a perfect addition for transport dioramas and collections.',
     stock: 1,
     newArrival: true,
-  },
-  {
-    name: 'Mega Gear Roxy Hauler-Unsealed',
-    brand: 'PreOrder',
-    scale: '1:64',
-    price: 1,
-    image: 'https://diecastchennai396.in/cdn/shop/files/8633.png?v=1776433910&width=1346',
-    images: [
-      'https://diecastchennai396.in/cdn/shop/files/8633.png?v=1776433910&width=1346'
-    ],
-    description: 'Detailed Mega Gear Roxy Hauler, a perfect addition for transport dioramas and collections.',
-    stock: 1,
-    isPreOrder: true,
-    newArrival: true,
-  },
-  {
-    name: 'Special Edition Prototype Model',
-    brand: 'PreOrder',
-    scale: '1:64',
-    price: 99,
-    fullPrice: 1999,
-    image: 'https://images.unsplash.com/photo-1581235720704-06d3acfcb36f?q=80&w=800&auto=format&fit=crop',
-    images: [
-      'https://images.unsplash.com/photo-1581235720704-06d3acfcb36f?q=80&w=800&auto=format&fit=crop'
-    ],
-    description: 'Limited edition pre-order prototype model. Coming soon!',
-    stock: 50,
-    isPreOrder: true,
-    newArrival: true,
   }
 ];
 
@@ -244,5 +214,5 @@ export const products: Product[] = rawProducts.map((p, index) => ({
   id: (index + 1).toString()
 }));
 
-export const brands = Array.from(new Set([...products.map(p => p.brand), 'Tarmac Works', 'Inno64', 'Pop Race', 'Kaido House', 'Para64', 'Miscellaneous', 'PreOrder']));
+export const brands = Array.from(new Set([...products.map(p => p.brand), 'Tarmac Works', 'Inno64', 'Pop Race', 'Kaido House', 'Para64', 'Miscellaneous']));
 export const scales = [];

@@ -42,21 +42,14 @@ export const TermsOfService: React.FC = () => {
               </section>
 
               <section>
-                <h2 className="text-xl font-bold text-white uppercase tracking-wider mb-4">3. Pre-Orders</h2>
-                <p>
-                  Pre-orders require a payment upfront or a deposit when applicable. The estimated release date is subject to change without prior notice. We will communicate any severe delays.
-                </p>
-              </section>
-
-              <section>
-                <h2 className="text-xl font-bold text-white uppercase tracking-wider mb-4">4. Limitation of Liability</h2>
+                <h2 className="text-xl font-bold text-white uppercase tracking-wider mb-4">3. Limitation of Liability</h2>
                 <p>
                   In no event shall Alloy Legends, nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from your access to or use of or inability to access or use the Service.
                 </p>
               </section>
 
               <section>
-                <h2 className="text-xl font-bold text-white uppercase tracking-wider mb-4">5. Contact Information</h2>
+                <h2 className="text-xl font-bold text-white uppercase tracking-wider mb-4">4. Contact Information</h2>
                 <p>
                   Questions about the Terms of Service should be sent to us at <a href="mailto:admin@alloylegends.com" className="text-racing-red hover:text-red-400 transition-colors underline">admin@alloylegends.com</a>.
                 </p>

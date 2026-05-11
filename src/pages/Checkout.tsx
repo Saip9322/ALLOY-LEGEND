@@ -55,8 +55,7 @@ export const Checkout: React.FC = () => {
     return null;
   }
 
-  const hasPreOrder = items.some(item => item.isPreOrder);
-  const shipping = hasPreOrder ? 0 : 150; // Free if pre-order, otherwise Flat shipping in INR
+  const shipping = 150; // Flat shipping in INR
   const tax = 0; 
   const finalTotal = totalPrice + shipping;
 
@@ -143,14 +142,56 @@ export const Checkout: React.FC = () => {
     try {
       const supabase = getSupabase();
       
-      const ordersToInsert = items.map(item => ({
+      const outOfStockItems: typeof items = [];
+      const successfulItems: typeof items = [];
+
+      // Check stock availability in database before confirming
+      for (const item of items) {
+        const { data: previousOrders, error: fetchError } = await supabase
+          .from('orders')
+          .select('quantity')
+          .eq('product_name', item.name);
+          
+        if (fetchError && fetchError.code !== '42P01') { 
+          // Ignore if table doesn't exist yet, just continue
+        }
+        
+        const orderedQuantity = previousOrders?.reduce((acc: number, order: any) => acc + (order.quantity || 0), 0) || 0;
+        const availableStock = item.stock - orderedQuantity;
+        
+        if (availableStock < item.quantity) {
+          outOfStockItems.push(item);
+        } else {
+          successfulItems.push(item);
+        }
+      }
+
+      if (outOfStockItems.length > 0) {
+        const outOfStockNames = outOfStockItems.map(i => i.name).join(', ');
+        
+        console.log(`[EMAIL SENT]: To ${formData.email}
+Subject: Order Refund Initiated - Out of Stock
+Body: While the payment was being processed for this order, availability of the stock may be over for: ${outOfStockNames}. Refund for the above will be initiated soon. Payment ID: ${paymentId}`);
+
+        setBanner({ 
+          type: 'error', 
+          message: `Stock ran out for: ${outOfStockNames} during checkout. An email has been sent and refund initiated.` 
+        });
+        
+        setIsProcessing(false);
+        setIsSubmitted(true);
+        clearCart();
+        return; // Halt order process if any item fails stock check 
+      }
+
+      const ordersToInsert = successfulItems.map(item => ({
         customer_name: `${formData.firstName} ${formData.lastName}`,
         phone: formData.phone,
         email: formData.email,
         city: formData.city,
         address: `${formData.address}${formData.landmark ? `, Near: ${formData.landmark}` : ''}, ${formData.city}, ${formData.state} - ${formData.zipCode}, ${formData.country} (Payment ID: ${paymentId})`,
         product_name: item.name,
-        product_variant: item.isPreOrder ? `PreOrder - ${item.brand}` : item.brand,
+        product_variant: item.brand,
         quantity: item.quantity,
         status: "processing"
       }));
@@ -162,7 +203,7 @@ export const Checkout: React.FC = () => {
       if (error) throw error;
 
       // Reduce stock locally in the product context
-      items.forEach(item => {
+      successfulItems.forEach(item => {
         reduceStock(item.id, item.quantity);
       });
 
@@ -186,7 +227,7 @@ export const Checkout: React.FC = () => {
           state: formData.state,
           zipCode: formData.zipCode,
           country: formData.country,
-          items: items
+          items: successfulItems
         };
 
         setIsProcessing(false);
@@ -443,11 +484,6 @@ export const Checkout: React.FC = () => {
                         className="w-16 h-16 object-contain rounded-lg bg-midnight border border-slate-border" 
                         referrerPolicy="no-referrer"
                       />
-                      {item.isPreOrder && (
-                        <div className="absolute -top-1 -left-1 bg-racing-red text-white text-[7px] font-black px-1.5 py-0.5 rounded-full uppercase tracking-tighter shadow-lg z-10">
-                          Pre-Order
-                        </div>
-                      )}
                       <span className="absolute -top-2 -right-2 bg-racing-red text-white text-[9px] font-black rounded-full h-5 w-5 flex items-center justify-center shadow-lg">
                         {item.quantity}
                       </span>
@@ -468,11 +504,7 @@ export const Checkout: React.FC = () => {
                 <div className="flex justify-between">
                   <span className="text-gray-500 font-bold uppercase tracking-[1px]">Shipping</span>
                   <span className="text-white font-sans tabular-nums tracking-tight">
-                    {hasPreOrder ? (
-                      <span className="text-racing-red font-black text-[12px] uppercase">* Calculated at Arrival</span>
-                    ) : (
-                      `₹${shipping.toLocaleString('en-IN')}`
-                    )}
+                    ₹{shipping.toLocaleString('en-IN')}
                   </span>
                 </div>
                 <div className="border-t border-slate-border pt-6 flex flex-col items-end gap-2">
