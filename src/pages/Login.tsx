@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { Loader2, Mail, Lock, ArrowRight } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
@@ -10,7 +10,10 @@ export const Login: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+  const location = useLocation();
   const { signIn, signInWithGoogle } = useAuth();
+  
+  const from = location.state?.from || '/';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,7 +23,7 @@ export const Login: React.FC = () => {
     try {
       const { error } = await signIn(email, password);
       if (error) throw error;
-      navigate('/');
+      navigate(from);
     } catch (err: any) {
       setError(err.message || 'Authentication failed');
     } finally {
@@ -32,7 +35,7 @@ export const Login: React.FC = () => {
     try {
       setLoading(true);
       setError(null);
-      const { error } = await signInWithGoogle();
+      const { error } = await signInWithGoogle(from);
       if (error) throw error;
       // Note: redirect is handled by OAuth flow
     } catch (err: any) {
@@ -148,6 +151,7 @@ export const Login: React.FC = () => {
           <div className="text-center pt-4">
             <Link
               to="/signup"
+              state={{ from }}
               className="text-[11px] text-gray-500 hover:text-white font-bold uppercase tracking-[1px] transition-colors"
             >
               Don't have an account? Sign up

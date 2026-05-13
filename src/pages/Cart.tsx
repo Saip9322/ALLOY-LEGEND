@@ -3,10 +3,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Trash2, ArrowRight, ShoppingBag } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 
 export const Cart: React.FC = () => {
   const { items, updateQuantity, removeFromCart, totalPrice } = useCart();
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   const shippingFee = 170;
 
@@ -195,7 +197,13 @@ export const Cart: React.FC = () => {
               </div>
               
               <button 
-                onClick={() => navigate('/checkout')}
+                onClick={() => {
+                  if (user) {
+                    navigate('/checkout');
+                  } else {
+                    navigate('/login', { state: { from: '/checkout' } });
+                  }
+                }}
                 className="w-full racing-gradient text-white py-4 rounded-full font-black uppercase tracking-[2px] text-[12px] transition-all hover:scale-105 shadow-xl shadow-racing-red/20 flex items-center justify-center"
               >
                 Proceed to Checkout <ArrowRight className="ml-2 h-4 w-4" />

@@ -10,7 +10,7 @@ interface AuthContextType {
   signIn: (email: string, password: string) => Promise<{ data: any, error: any }>;
   signInWithOtp: (email: string) => Promise<{ data: any, error: any }>;
   verifyOtp: (email: string, token: string) => Promise<{ data: any, error: any }>;
-  signInWithGoogle: () => Promise<{ data: any, error: any }>;
+  signInWithGoogle: (redirectTo?: string) => Promise<{ data: any, error: any }>;
   updateProfile: (data: { fullName?: string; address?: string; landmark?: string; city?: string; state?: string; zip?: string; country?: string; phone?: string }) => Promise<{ data: any, error: any }>;
 }
 
@@ -109,13 +109,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const signInWithGoogle = async () => {
+  const signInWithGoogle = async (redirectTo?: string) => {
     try {
       const supabase = getSupabase();
+      const redirectUrl = redirectTo 
+        ? `${window.location.origin}${redirectTo}` 
+        : window.location.origin;
+        
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: window.location.origin,
+          redirectTo: redirectUrl,
         },
       });
       return { data, error };

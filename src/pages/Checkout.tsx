@@ -8,7 +8,7 @@ import { useProducts } from '../context/ProductContext';
 import { getSupabase } from '../lib/supabase';
 
 export const Checkout: React.FC = () => {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const { items, totalPrice, clearCart } = useCart();
   const { reduceStock } = useProducts();
   const navigate = useNavigate();
@@ -46,10 +46,22 @@ export const Checkout: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (items.length === 0 && !isSubmitted) {
-      navigate('/cart');
+    if (!loading) {
+      if (!user) {
+        navigate('/login', { state: { from: '/checkout' }, replace: true });
+      } else if (items.length === 0 && !isSubmitted) {
+        navigate('/cart');
+      }
     }
-  }, [items, navigate, isSubmitted]);
+  }, [user, loading, items, navigate, isSubmitted]);
+
+  if (loading || (!user && !isSubmitted)) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-racing-red border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
 
   if (items.length === 0 && !isSubmitted) {
     return null;
