@@ -142,59 +142,6 @@ const rawProducts: Omit<Product, 'id'>[] = [
     newArrival: true,
   },
   {
-    name: 'Porsche 911 GT3 R Grello',
-    brand: 'Tarmac Works',
-    scale: '1:64',
-    price: 1950,
-    image: 'https://cdn.shopify.com/s/files/1/0610/0117/1163/products/T64-043-GR_1_1024x1024.jpg?v=1645000000',
-    images: [
-      'https://cdn.shopify.com/s/files/1/0610/0117/1163/products/T64-043-GR_1_1024x1024.jpg?v=1645000000'
-    ],
-    description: 'Tarmac Works Porsche 911 GT3 R #911 Manthey Racing "Grello" Nurburgring 24h 2021.',
-    stock: 2,
-    featured: true,
-  },
-  {
-    name: 'HKS Nissan Skyline GT-R R32',
-    brand: 'Pop Race',
-    scale: '1:64',
-    price: 1750,
-    image: 'https://cdn.shopify.com/s/files/1/0610/0117/1163/products/PR64-R32-HKS_1_1024x1024.jpg?v=1645000000',
-    images: [
-      'https://cdn.shopify.com/s/files/1/0610/0117/1163/products/PR64-R32-HKS_1_1024x1024.jpg?v=1645000000'
-    ],
-    description: 'Pop Race Nissan Skyline R32 GT-R Group A HKS Livery. opening hood and detailed engine.',
-    stock: 6,
-    trending: true,
-  },
-  {
-    name: 'Datsun 510 Pro Street OG Green',
-    brand: 'Kaido House',
-    scale: '1:64',
-    price: 1999,
-    image: 'https://cdn.shopify.com/s/files/1/0610/0117/1163/products/KHMG001_1_1024x1024.jpg?v=1645000000',
-    images: [
-      'https://cdn.shopify.com/s/files/1/0610/0117/1163/products/KHMG001_1_1024x1024.jpg?v=1645000000'
-    ],
-    description: 'Kaido House x Mini GT Datsun 510 Pro Street in OG Green. Designed by Jun Imai.',
-    stock: 2,
-    featured: true,
-  },
-  {
-    name: 'BMW M8 GTE Team MTEK 2019',
-    brand: 'Para64',
-    scale: '1:64',
-    price: 1450,
-    image: 'https://cdn.shopify.com/s/files/1/0610/0117/1163/products/PA-64123_1_1024x1024.jpg?v=1645000000',
-    images: [
-      'https://cdn.shopify.com/s/files/1/0610/0117/1163/products/PA-64123_1_1024x1024.jpg?v=1645000000'
-    ],
-    description: 'Para64 BMW M8 GTE. Officially licensed model with high quality rolling wheels.',
-    stock: 5,
-    newArrival: true,
-    hidden: true,
-  },
-  {
     name: 'Mega Gear Roxy Hauler-Unsealed',
     brand: 'Miscellaneous',
     scale: '1:64',
