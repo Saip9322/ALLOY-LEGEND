@@ -8,7 +8,7 @@ export const Cart: React.FC = () => {
   const { items, updateQuantity, removeFromCart, totalPrice } = useCart();
   const navigate = useNavigate();
 
-  const shippingFee = 150;
+  const shippingFee = 170;
 
   if (items.length === 0) {
     return (

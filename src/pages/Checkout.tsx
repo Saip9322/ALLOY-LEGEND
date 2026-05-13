@@ -55,7 +55,7 @@ export const Checkout: React.FC = () => {
     return null;
   }
 
-  const shipping = 150; // Flat shipping in INR
+  const shipping = 170; // Flat shipping in INR
   const tax = 0; 
   const finalTotal = totalPrice + shipping;
 
