@@ -128,20 +128,6 @@ const rawProducts: Omit<Product, 'id'>[] = [
     newArrival: true,
   },
   {
-    name: 'Nissan Skyline GT-R (R34) R-Tune Silver',
-    brand: 'Inno64',
-    scale: '1:64',
-    price: 1850,
-    image: 'https://cdn.shopify.com/s/files/1/0610/0117/1163/products/IN64-R34RT-SLV_1_1024x1024.jpg?v=1645000000',
-    images: [
-      'https://cdn.shopify.com/s/files/1/0610/0117/1163/products/IN64-R34RT-SLV_1_1024x1024.jpg?v=1645000000',
-      'https://cdn.shopify.com/s/files/1/0610/0117/1163/products/IN64-R34RT-SLV_2_1024x1024.jpg?v=1645000000'
-    ],
-    description: 'Inno64 Nissan Skyline GT-R R34 R-Tune in stunning silver. Incredible detail and accuracy.',
-    stock: 4,
-    newArrival: true,
-  },
-  {
     name: 'Mega Gear Roxy Hauler-Unsealed',
     brand: 'Miscellaneous',
     scale: '1:64',
@@ -161,5 +147,5 @@ export const products: Product[] = rawProducts.map((p, index) => ({
   id: (index + 1).toString()
 }));
 
-export const brands = Array.from(new Set([...products.map(p => p.brand), 'Tarmac Works', 'Inno64', 'Pop Race', 'Kaido House', 'Para64', 'Miscellaneous']));
+export const brands = Array.from(new Set([...products.map(p => p.brand), 'Tarmac Works', 'Pop Race', 'Kaido House', 'Para64', 'Miscellaneous']));
 export const scales = [];
